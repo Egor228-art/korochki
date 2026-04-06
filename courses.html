@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы - Корочки.есть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Все программы обучения</h2>
+            <p style="color: #64748b;">Выберите курс и начните обучение уже сегодня</p>
+            
+            <!-- Фильтры -->
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по названию..." style="flex: 1; max-width: 300px;">
+                <select id="levelFilter" style="width: auto;">
+                    <option value="all">Все уровни</option>
+                    <option value="Начальный">Начальный</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Продвинутый">Продвинутый</option>
+                </select>
+                <button id="resetFilterBtn" class="btn btn-secondary">Сбросить</button>
+            </div>
+        </div>
+        
+        <div class="course-grid-catalog" id="coursesList">Загрузка курсов...</div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+    </footer>
+    
+    <script src="js/common.js"></script>
+    <script>
+        let allCourses = [];
+        
+        async function loadCourses() {
+            allCourses = await getCourses();
+            renderCourses();
+        }
+        
+        function renderCourses() {
+            const container = document.getElementById('coursesList');
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const levelFilter = document.getElementById('levelFilter')?.value || 'all';
+            
+            let filtered = allCourses;
+            
+            if (searchTerm) {
+                filtered = filtered.filter(c => c.name.toLowerCase().includes(searchTerm));
+            }
+            if (levelFilter !== 'all') {
+                filtered = filtered.filter(c => c.level === levelFilter);
+            }
+            
+            if (!filtered.length) {
+                container.innerHTML = '<div class="text-center">Курсы не найдены. Попробуйте изменить фильтры.</div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(c => `
+                <div class="course-card-catalog">
+                    <div class="course-header">
+                        <h3>${escapeHtml(c.name)}</h3>
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">${c.level}</span>
+                    </div>
+                    <div class="course-body">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+                            <span style="background: #e2e8f0; padding: 4px 12px; border-radius: 20px;">⏱ ${c.hours} часов</span>
+                            <span style="background: #e2e8f0; padding: 4px 12px; border-radius: 20px;">💰 ${c.price.toLocaleString()} ₽</span>
+                        </div>
+                        <p style="color: #475569;">Программа курса "${c.name}" разработана опытными специалистами. После успешного завершения вы получите удостоверение государственного образца.</p>
+                    </div>
+                    <div class="course-footer">
+                        <button class="btn btn-primary" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Оставить заявку</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function applyForCourse(courseName) {
+            if (!currentUser) {
+                if (confirm('Для подачи заявки нужно войти. Перейти на страницу входа?')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            localStorage.setItem('selectedCourse', courseName);
+            window.location.href = 'application_form.html';
+        }
+        
+        // События фильтров
+        document.getElementById('searchInput')?.addEventListener('input', renderCourses);
+        document.getElementById('levelFilter')?.addEventListener('change', renderCourses);
+        document.getElementById('resetFilterBtn')?.addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('levelFilter').value = 'all';
+            renderCourses();
+        });
+        
+        loadCourses();
+    </script>
+</body>
+</html>

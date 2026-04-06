@@ -1,0 +1,14 @@
+pocketbase/
+pocketbase.exe
+pb_data/
+
+# Но НЕ игнорируем ZIP-архив
+!*.zip
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

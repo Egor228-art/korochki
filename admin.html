@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Корочки.есть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть (Админ)</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Статистика -->
+        <div class="admin-stats">
+            <div class="stat-card"><div class="stat-number" id="statsCourses">0</div><div class="stat-label">Курсов</div></div>
+            <div class="stat-card"><div class="stat-number" id="statsApplications">0</div><div class="stat-label">Заявок</div></div>
+            <div class="stat-card"><div class="stat-number" id="statsUsers">0</div><div class="stat-label">Пользователей</div></div>
+            <div class="stat-card"><div class="stat-number" id="statsReviews">0</div><div class="stat-label">Отзывов</div></div>
+        </div>
+        
+        <div class="card">
+            <h2>Управление курсами</h2>
+            <button class="btn btn-primary" id="showAddCourseBtn">+ Добавить курс</button>
+            <div id="coursesList">Загрузка...</div>
+        </div>
+        
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+                <h2 style="margin: 0;">Все заявки пользователей</h2>
+                <button class="btn btn-secondary" id="exportCsvBtn">Экспорт в CSV</button>
+            </div>
+            <div id="applicationsList">Загрузка...</div>
+            <div id="pagination" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;"></div>
+        </div>
+    </div>
+    
+    <!-- Модалка добавления курса -->
+    <div id="addCourseModal" class="modal">
+        <div class="modal-content">
+            <h3>Добавить курс</h3>
+            <form id="addCourseForm">
+                <div class="form-group"><label>Название</label><input type="text" id="courseName" required></div>
+                <div class="form-group"><label>Часов</label><input type="number" id="courseHours" required></div>
+                <div class="form-group"><label>Цена (₽)</label><input type="number" id="coursePrice" required></div>
+                <div class="form-group"><label>Уровень</label><select id="courseLevel"><option>Начальный</option><option>Средний</option><option>Продвинутый</option></select></div>
+                <div class="modal-buttons"><button type="submit" class="btn btn-primary">Добавить</button><button type="button" id="closeCourseModal" class="btn btn-secondary">Отмена</button></div>
+            </form>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+    </footer>
+    
+    <script src="js/common.js"></script>
+    <script>
+        if (!requireAdmin()) throw new Error('Нет прав');
+        
+        let allCourses = [];
+        let allApplications = [];
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        
+        async function loadCourses() {
+            try {
+                allCourses = await getCourses();
+                const container = document.getElementById('coursesList');
+                if (!allCourses.length) { 
+                    container.innerHTML = '<p>Нет курсов. Добавьте первый курс.</p>'; 
+                    return; 
+                }
+                let html = '<div class="table-responsive"><table style="width:100%"><thead><tr><th>Название</th><th>Часов</th><th>Цена</th><th>Уровень</th><th></th></tr></thead><tbody>';
+                for (let c of allCourses) {
+                    html += `<tr>
+                        <td><strong>${escapeHtml(c.name)}</strong></td>
+                        <td>${c.hours}</td>
+                        <td>${c.price.toLocaleString()} ₽</td>
+                        <td>${c.level}</td>
+                        <td><button class="btn btn-small btn-danger" onclick="deleteCourseById('${c.id}')">Удалить</button></td>
+                    </tr>`;
+                }
+                html += '</tbody>}</div>';
+                container.innerHTML = html;
+                document.getElementById('statsCourses').textContent = allCourses.length;
+            } catch(e) { 
+                console.error(e); 
+            }
+        }
+        
+        async function loadApplications() {
+            try {
+                allApplications = await getAllApplications();
+                document.getElementById('statsApplications').textContent = allApplications.length;
+                renderApplicationsPage();
+                
+                // Загружаем отзывы для статистики
+                const reviews = await getAllReviews();
+                document.getElementById('statsReviews').textContent = reviews.length;
+            } catch(e) { 
+                console.error(e); 
+            }
+        }
+        
+        function renderApplicationsPage() {
+            const container = document.getElementById('applicationsList');
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageApps = allApplications.slice(start, end);
+            
+            if (!pageApps.length) { 
+                container.innerHTML = '<p>Нет заявок</p>'; 
+                return; 
+            }
+            
+            let html = '<div class="table-responsive"><table style="width:100%"><thead><tr><th>Пользователь</th><th>Курс</th><th>Дата</th><th>Оплата</th><th>Статус</th><th></th></tr></thead><tbody>';
+            for (let app of pageApps) {
+                const userName = app.user_name || app.user;
+                html += `<tr>
+                    <td>${escapeHtml(userName)}</td>
+                    <td><strong>${escapeHtml(app.course_name)}</strong></td>
+                    <td>${app.desired_start_date}</td>
+                    <td>${app.payment_method}</td>
+                    <td>
+                        <select id="status_${app.id}">
+                            <option ${app.status === 'Новая' ? 'selected' : ''}>Новая</option>
+                            <option ${app.status === 'Идет обучение' ? 'selected' : ''}>Идет обучение</option>
+                            <option ${app.status === 'Обучение завершено' ? 'selected' : ''}>Обучение завершено</option>
+                        </select>
+                    </td>
+                    <td><button class="btn btn-small" onclick="updateStatus('${app.id}')">Сохранить</button></td>
+                </tr>`;
+            }
+            html += '</tbody>}</div>';
+            container.innerHTML = html;
+            
+            // Пагинация
+            const totalPages = Math.ceil(allApplications.length / itemsPerPage);
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+            let paginationHtml = '';
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `<button class="btn btn-small ${i === currentPage ? 'btn-primary' : 'btn-secondary'}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            paginationDiv.innerHTML = paginationHtml;
+        }
+        
+        window.goToPage = (page) => {
+            currentPage = page;
+            renderApplicationsPage();
+        };
+        
+        window.updateStatus = async (id) => {
+            const select = document.getElementById(`status_${id}`);
+            if (!select) return;
+            await updateApplicationStatus(id, select.value);
+            alert('Статус обновлён');
+            await loadApplications();
+        };
+        
+        window.deleteCourseById = async (id) => {
+            if(confirm('Удалить курс?')) { 
+                await deleteCourse(id); 
+                loadCourses(); 
+            }
+        };
+        
+        // Экспорт в CSV
+        document.getElementById('exportCsvBtn').onclick = () => {
+            if (!allApplications.length) {
+                alert('Нет заявок для экспорта');
+                return;
+            }
+            let csvContent = "\uFEFFID,Пользователь,Курс,Дата,Оплата,Статус\n";
+            allApplications.forEach(app => {
+                const row = `"${app.id}","${escapeCsv(app.user_name || app.user)}","${escapeCsv(app.course_name)}","${app.desired_start_date}","${app.payment_method}","${app.status}"`;
+                csvContent += row + "\n";
+            });
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.setAttribute('download', 'zayavki.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        };
+        
+        function escapeCsv(str) {
+            if (!str) return '';
+            return str.replace(/"/g, '""');
+        }
+        
+        async function loadUsers() {
+            try {
+                const users = await getAllUsers();
+                document.getElementById('statsUsers').textContent = users.length;
+            } catch(e) { console.error(e); }
+        }
+        
+        // Модалки
+        document.getElementById('showAddCourseBtn').onclick = () => document.getElementById('addCourseModal').style.display = 'flex';
+        document.getElementById('closeCourseModal').onclick = () => document.getElementById('addCourseModal').style.display = 'none';
+        
+        document.getElementById('addCourseForm').onsubmit = async (e) => {
+            e.preventDefault();
+            await createCourse({ 
+                name: document.getElementById('courseName').value, 
+                hours: parseInt(document.getElementById('courseHours').value), 
+                price: parseInt(document.getElementById('coursePrice').value), 
+                level: document.getElementById('courseLevel').value 
+            });
+            document.getElementById('addCourseModal').style.display = 'none';
+            document.getElementById('courseName').value = '';
+            document.getElementById('courseHours').value = '';
+            document.getElementById('coursePrice').value = '';
+            loadCourses();
+            alert('Курс добавлен');
+        };
+        
+        loadCourses();
+        loadApplications();
+        loadUsers();
+    </script>
+</body>
+</html>
