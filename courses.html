@@ -7,20 +7,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+    <header class="crs-12-hdr">
+        <div class="crs-13-hcnt">
+            <div class="crs-14-logo"><a href="index.html">Корочки.есть</a></div>
             <div class="burger"><span></span><span></span><span></span></div>
             <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card">
+    <div class="crs-20-cont">
+        <div class="crs-21-card">
             <h2>Все программы обучения</h2>
             <p style="color: #64748b;">Выберите курс и начните обучение уже сегодня</p>
             
-            <!-- Фильтры -->
             <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
                 <input type="text" id="searchInput" placeholder="🔍 Поиск по названию..." style="flex: 1; max-width: 300px;">
                 <select id="levelFilter" style="width: auto;">
@@ -29,20 +28,20 @@
                     <option value="Средний">Средний</option>
                     <option value="Продвинутый">Продвинутый</option>
                 </select>
-                <button id="resetFilterBtn" class="btn btn-secondary">Сбросить</button>
+                <button id="resetFilterBtn" class="crs-30-btn crs-30-btns">Сбросить</button>
             </div>
         </div>
         
-        <div class="course-grid-catalog" id="coursesList">Загрузка курсов...</div>
+        <div class="crs-34-cgridc" id="coursesList">Загрузка курсов...</div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="crs-38-foot">
+        <div class="crs-39-fcont">
+            <div class="crs-40-fcol"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="crs-41-fcol"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="crs-42-fcol"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="crs-45-fbot"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -60,34 +59,29 @@
             const levelFilter = document.getElementById('levelFilter')?.value || 'all';
             
             let filtered = allCourses;
-            
-            if (searchTerm) {
-                filtered = filtered.filter(c => c.name.toLowerCase().includes(searchTerm));
-            }
-            if (levelFilter !== 'all') {
-                filtered = filtered.filter(c => c.level === levelFilter);
-            }
+            if (searchTerm) filtered = filtered.filter(c => c.name.toLowerCase().includes(searchTerm));
+            if (levelFilter !== 'all') filtered = filtered.filter(c => c.level === levelFilter);
             
             if (!filtered.length) {
-                container.innerHTML = '<div class="text-center">Курсы не найдены. Попробуйте изменить фильтры.</div>';
+                container.innerHTML = '<div class="crs-txc">Курсы не найдены.</div>';
                 return;
             }
             
             container.innerHTML = filtered.map(c => `
-                <div class="course-card-catalog">
-                    <div class="course-header">
+                <div class="crs-ccardc">
+                    <div class="crs-chdr">
                         <h3>${escapeHtml(c.name)}</h3>
                         <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">${c.level}</span>
                     </div>
-                    <div class="course-body">
+                    <div class="crs-cbody">
                         <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
                             <span style="background: #e2e8f0; padding: 4px 12px; border-radius: 20px;">⏱ ${c.hours} часов</span>
                             <span style="background: #e2e8f0; padding: 4px 12px; border-radius: 20px;">💰 ${c.price.toLocaleString()} ₽</span>
                         </div>
-                        <p style="color: #475569;">Программа курса "${c.name}" разработана опытными специалистами. После успешного завершения вы получите удостоверение государственного образца.</p>
+                        <p style="color: #475569;">Программа курса "${c.name}" разработана опытными специалистами.</p>
                     </div>
-                    <div class="course-footer">
-                        <button class="btn btn-primary" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Оставить заявку</button>
+                    <div class="crs-cfoot">
+                        <button class="crs-btn crs-btnp" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Оставить заявку</button>
                     </div>
                 </div>
             `).join('');
@@ -104,7 +98,6 @@
             window.location.href = 'application_form.html';
         }
         
-        // События фильтров
         document.getElementById('searchInput')?.addEventListener('input', renderCourses);
         document.getElementById('levelFilter')?.addEventListener('change', renderCourses);
         document.getElementById('resetFilterBtn')?.addEventListener('click', () => {

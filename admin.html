@@ -7,60 +7,58 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть (Админ)</a></div>
+    <header class="adm-12-hdr">
+        <div class="adm-13-hcnt">
+            <div class="adm-14-logo"><a href="index.html">Корочки.есть (Админ)</a></div>
             <div class="burger"><span></span><span></span><span></span></div>
             <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <!-- Статистика -->
-        <div class="admin-stats">
-            <div class="stat-card"><div class="stat-number" id="statsCourses">0</div><div class="stat-label">Курсов</div></div>
-            <div class="stat-card"><div class="stat-number" id="statsApplications">0</div><div class="stat-label">Заявок</div></div>
-            <div class="stat-card"><div class="stat-number" id="statsUsers">0</div><div class="stat-label">Пользователей</div></div>
-            <div class="stat-card"><div class="stat-number" id="statsReviews">0</div><div class="stat-label">Отзывов</div></div>
+    <div class="adm-20-cont">
+        <div class="adm-22-astats">
+            <div class="adm-23-scard"><div class="adm-23-snum" id="statsCourses">0</div><div class="adm-23-slab">Курсов</div></div>
+            <div class="adm-24-scard"><div class="adm-24-snum" id="statsApplications">0</div><div class="adm-24-slab">Заявок</div></div>
+            <div class="adm-25-scard"><div class="adm-25-snum" id="statsUsers">0</div><div class="adm-25-slab">Пользователей</div></div>
+            <div class="adm-26-scard"><div class="adm-26-snum" id="statsReviews">0</div><div class="adm-26-slab">Отзывов</div></div>
         </div>
         
-        <div class="card">
+        <div class="adm-30-card">
             <h2>Управление курсами</h2>
-            <button class="btn btn-primary" id="showAddCourseBtn">+ Добавить курс</button>
+            <button class="adm-32-btn adm-32-btnp" id="showAddCourseBtn">+ Добавить курс</button>
             <div id="coursesList">Загрузка...</div>
         </div>
         
-        <div class="card">
+        <div class="adm-36-card">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
                 <h2 style="margin: 0;">Все заявки пользователей</h2>
-                <button class="btn btn-secondary" id="exportCsvBtn">Экспорт в CSV</button>
+                <button class="adm-39-btn adm-39-btns" id="exportCsvBtn">Экспорт в CSV</button>
             </div>
             <div id="applicationsList">Загрузка...</div>
             <div id="pagination" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;"></div>
         </div>
     </div>
     
-    <!-- Модалка добавления курса -->
-    <div id="addCourseModal" class="modal">
-        <div class="modal-content">
+    <div id="addCourseModal" class="adm-47-modal">
+        <div class="adm-48-mcont">
             <h3>Добавить курс</h3>
             <form id="addCourseForm">
-                <div class="form-group"><label>Название</label><input type="text" id="courseName" required></div>
-                <div class="form-group"><label>Часов</label><input type="number" id="courseHours" required></div>
-                <div class="form-group"><label>Цена (₽)</label><input type="number" id="coursePrice" required></div>
-                <div class="form-group"><label>Уровень</label><select id="courseLevel"><option>Начальный</option><option>Средний</option><option>Продвинутый</option></select></div>
-                <div class="modal-buttons"><button type="submit" class="btn btn-primary">Добавить</button><button type="button" id="closeCourseModal" class="btn btn-secondary">Отмена</button></div>
+                <div class="adm-51-fgrp"><label>Название</label><input type="text" id="courseName" required></div>
+                <div class="adm-52-fgrp"><label>Часов</label><input type="number" id="courseHours" required></div>
+                <div class="adm-53-fgrp"><label>Цена (₽)</label><input type="number" id="coursePrice" required></div>
+                <div class="adm-54-fgrp"><label>Уровень</label><select id="courseLevel"><option>Начальный</option><option>Средний</option><option>Продвинутый</option></select></div>
+                <div class="adm-55-mbtn"><button type="submit" class="adm-55-btn adm-55-btnp">Добавить</button><button type="button" id="closeCourseModal" class="adm-55-btn adm-55-btns">Отмена</button></div>
             </form>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="adm-62-foot">
+        <div class="adm-63-fcont">
+            <div class="adm-64-fcol"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="adm-65-fcol"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="adm-66-fcol"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="adm-69-fbot"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -77,25 +75,23 @@
                 allCourses = await getCourses();
                 const container = document.getElementById('coursesList');
                 if (!allCourses.length) { 
-                    container.innerHTML = '<p>Нет курсов. Добавьте первый курс.</p>'; 
+                    container.innerHTML = '<p>Нет курсов.</p>'; 
                     return; 
                 }
-                let html = '<div class="table-responsive"><table style="width:100%"><thead><tr><th>Название</th><th>Часов</th><th>Цена</th><th>Уровень</th><th></th></tr></thead><tbody>';
+                let html = '<div class="adm-tresp"><table style="width:100%"><thead><tr><th>Название</th><th>Часов</th><th>Цена</th><th>Уровень</th><th></th></tr></thead><tbody>';
                 for (let c of allCourses) {
                     html += `<tr>
                         <td><strong>${escapeHtml(c.name)}</strong></td>
                         <td>${c.hours}</td>
                         <td>${c.price.toLocaleString()} ₽</td>
                         <td>${c.level}</td>
-                        <td><button class="btn btn-small btn-danger" onclick="deleteCourseById('${c.id}')">Удалить</button></td>
+                        <td><button class="adm-btn adm-btnsm adm-btnd" onclick="deleteCourseById('${c.id}')">Удалить</button></td>
                     </tr>`;
                 }
                 html += '</tbody>}</div>';
                 container.innerHTML = html;
                 document.getElementById('statsCourses').textContent = allCourses.length;
-            } catch(e) { 
-                console.error(e); 
-            }
+            } catch(e) { console.error(e); }
         }
         
         async function loadApplications() {
@@ -103,13 +99,9 @@
                 allApplications = await getAllApplications();
                 document.getElementById('statsApplications').textContent = allApplications.length;
                 renderApplicationsPage();
-                
-                // Загружаем отзывы для статистики
                 const reviews = await getAllReviews();
                 document.getElementById('statsReviews').textContent = reviews.length;
-            } catch(e) { 
-                console.error(e); 
-            }
+            } catch(e) { console.error(e); }
         }
         
         function renderApplicationsPage() {
@@ -118,12 +110,9 @@
             const end = start + itemsPerPage;
             const pageApps = allApplications.slice(start, end);
             
-            if (!pageApps.length) { 
-                container.innerHTML = '<p>Нет заявок</p>'; 
-                return; 
-            }
+            if (!pageApps.length) { container.innerHTML = '<p>Нет заявок</p>'; return; }
             
-            let html = '<div class="table-responsive"><table style="width:100%"><thead><tr><th>Пользователь</th><th>Курс</th><th>Дата</th><th>Оплата</th><th>Статус</th><th></th></tr></thead><tbody>';
+            let html = '<div class="adm-tresp"><table style="width:100%"><thead><tr><th>Пользователь</th><th>Курс</th><th>Дата</th><th>Оплата</th><th>Статус</th><th></th></tr></thead><tbody>';
             for (let app of pageApps) {
                 const userName = app.user_name || app.user;
                 html += `<tr>
@@ -131,38 +120,28 @@
                     <td><strong>${escapeHtml(app.course_name)}</strong></td>
                     <td>${app.desired_start_date}</td>
                     <td>${app.payment_method}</td>
-                    <td>
-                        <select id="status_${app.id}">
-                            <option ${app.status === 'Новая' ? 'selected' : ''}>Новая</option>
-                            <option ${app.status === 'Идет обучение' ? 'selected' : ''}>Идет обучение</option>
-                            <option ${app.status === 'Обучение завершено' ? 'selected' : ''}>Обучение завершено</option>
-                        </select>
-                    </td>
-                    <td><button class="btn btn-small" onclick="updateStatus('${app.id}')">Сохранить</button></td>
+                    <td><select id="status_${app.id}">
+                        <option ${app.status === 'Новая' ? 'selected' : ''}>Новая</option>
+                        <option ${app.status === 'Идет обучение' ? 'selected' : ''}>Идет обучение</option>
+                        <option ${app.status === 'Обучение завершено' ? 'selected' : ''}>Обучение завершено</option>
+                    </select></td>
+                    <td><button class="adm-btn adm-btnsm" onclick="updateStatus('${app.id}')">Сохранить</button></td>
                 </tr>`;
             }
             html += '</tbody>}</div>';
             container.innerHTML = html;
             
-            // Пагинация
             const totalPages = Math.ceil(allApplications.length / itemsPerPage);
             const paginationDiv = document.getElementById('pagination');
-            if (totalPages <= 1) {
-                paginationDiv.innerHTML = '';
-                return;
-            }
+            if (totalPages <= 1) { paginationDiv.innerHTML = ''; return; }
             let paginationHtml = '';
             for (let i = 1; i <= totalPages; i++) {
-                paginationHtml += `<button class="btn btn-small ${i === currentPage ? 'btn-primary' : 'btn-secondary'}" onclick="goToPage(${i})">${i}</button>`;
+                paginationHtml += `<button class="adm-btn adm-btnsm ${i === currentPage ? 'adm-btnp' : 'adm-btns'}" onclick="goToPage(${i})">${i}</button>`;
             }
             paginationDiv.innerHTML = paginationHtml;
         }
         
-        window.goToPage = (page) => {
-            currentPage = page;
-            renderApplicationsPage();
-        };
-        
+        window.goToPage = (page) => { currentPage = page; renderApplicationsPage(); };
         window.updateStatus = async (id) => {
             const select = document.getElementById(`status_${id}`);
             if (!select) return;
@@ -170,49 +149,25 @@
             alert('Статус обновлён');
             await loadApplications();
         };
+        window.deleteCourseById = async (id) => { if(confirm('Удалить курс?')) { await deleteCourse(id); loadCourses(); } };
         
-        window.deleteCourseById = async (id) => {
-            if(confirm('Удалить курс?')) { 
-                await deleteCourse(id); 
-                loadCourses(); 
-            }
-        };
-        
-        // Экспорт в CSV
         document.getElementById('exportCsvBtn').onclick = () => {
-            if (!allApplications.length) {
-                alert('Нет заявок для экспорта');
-                return;
-            }
+            if (!allApplications.length) { alert('Нет заявок'); return; }
             let csvContent = "\uFEFFID,Пользователь,Курс,Дата,Оплата,Статус\n";
             allApplications.forEach(app => {
-                const row = `"${app.id}","${escapeCsv(app.user_name || app.user)}","${escapeCsv(app.course_name)}","${app.desired_start_date}","${app.payment_method}","${app.status}"`;
-                csvContent += row + "\n";
+                csvContent += `"${app.id}","${(app.user_name || app.user).replace(/"/g,'""')}","${(app.course_name||'').replace(/"/g,'""')}","${app.desired_start_date}","${app.payment_method}","${app.status}"\n`;
             });
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.href = url;
-            link.setAttribute('download', 'zayavki.csv');
-            document.body.appendChild(link);
+            link.href = URL.createObjectURL(blob);
+            link.download = 'zayavki.csv';
             link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
         };
         
-        function escapeCsv(str) {
-            if (!str) return '';
-            return str.replace(/"/g, '""');
-        }
-        
         async function loadUsers() {
-            try {
-                const users = await getAllUsers();
-                document.getElementById('statsUsers').textContent = users.length;
-            } catch(e) { console.error(e); }
+            try { const users = await getAllUsers(); document.getElementById('statsUsers').textContent = users.length; } catch(e) {}
         }
         
-        // Модалки
         document.getElementById('showAddCourseBtn').onclick = () => document.getElementById('addCourseModal').style.display = 'flex';
         document.getElementById('closeCourseModal').onclick = () => document.getElementById('addCourseModal').style.display = 'none';
         
@@ -225,9 +180,6 @@
                 level: document.getElementById('courseLevel').value 
             });
             document.getElementById('addCourseModal').style.display = 'none';
-            document.getElementById('courseName').value = '';
-            document.getElementById('courseHours').value = '';
-            document.getElementById('coursePrice').value = '';
             loadCourses();
             alert('Курс добавлен');
         };

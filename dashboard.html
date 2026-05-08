@@ -6,7 +6,7 @@
     <title>Мои заявки - Корочки.есть</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .notification {
+        .dash-notif {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -15,49 +15,49 @@
             padding: 12px 24px;
             border-radius: 12px;
             z-index: 10000;
-            animation: slideIn 0.3s ease;
+            animation: dash-slidein 0.3s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        @keyframes slideIn {
+        @keyframes dash-slidein {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+    <header class="dash-27-hdr">
+        <div class="dash-28-hcnt">
+            <div class="dash-29-logo"><a href="index.html">Корочки.есть</a></div>
             <div class="burger"><span></span><span></span><span></span></div>
             <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card">
+    <div class="dash-35-cont">
+        <div class="dash-36-card">
             <h2>Мои заявки на обучение</h2>
             <div id="applicationsList">Загрузка...</div>
         </div>
     </div>
     
-    <div id="reviewModal" class="modal">
-        <div class="modal-content">
+    <div id="reviewModal" class="dash-42-modal">
+        <div class="dash-43-mcont">
             <h3>Оставить отзыв</h3>
             <textarea id="reviewText" rows="4" style="width:100%" placeholder="Поделитесь впечатлениями..."></textarea>
-            <div class="modal-buttons">
-                <button id="submitReviewBtn" class="btn btn-primary">Отправить</button>
-                <button id="closeReviewBtn" class="btn btn-secondary">Отмена</button>
+            <div class="dash-46-mbtn">
+                <button id="submitReviewBtn" class="dash-47-btn dash-47-btnp">Отправить</button>
+                <button id="closeReviewBtn" class="dash-48-btn dash-48-btns">Отмена</button>
             </div>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="dash-54-foot">
+        <div class="dash-55-fcont">
+            <div class="dash-56-fcol"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="dash-57-fcol"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="dash-58-fcol"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="dash-61-fbot"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -69,7 +69,7 @@
         
         function showNotification(message, isSuccess = true) {
             const notification = document.createElement('div');
-            notification.className = 'notification';
+            notification.className = 'dash-notif';
             notification.style.background = isSuccess ? '#2c7da0' : '#e53e3e';
             notification.textContent = message;
             document.body.appendChild(notification);
@@ -78,25 +78,24 @@
         
         async function loadApplications() {
             const container = document.getElementById('applicationsList');
-            container.innerHTML = '<div class="text-center">Загрузка заявок...</div>';
+            container.innerHTML = '<div class="dash-txc">Загрузка заявок...</div>';
             
             try {
                 const apps = await getUserApplications(currentUser.id);
                 
                 if (!apps.length) {
                     container.innerHTML = `
-                        <div class="text-center" style="padding: 40px;">
+                        <div class="dash-txc" style="padding: 40px;">
                             <p>📭 У вас пока нет заявок</p>
-                            <a href="courses.html" class="btn btn-primary" style="margin-top: 16px;">Перейти к курсам</a>
+                            <a href="courses.html" class="dash-btn dash-btnp" style="margin-top: 16px;">Перейти к курсам</a>
                         </div>
                     `;
                     return;
                 }
                 
-                let html = '<div class="table-responsive"><table style="width:100%; border-collapse: collapse;"><thead><tr style="background: #0f2b3d; color: white;"><th style="padding: 12px;">Курс</th><th style="padding: 12px;">Дата</th><th style="padding: 12px;">Оплата</th><th style="padding: 12px;">Статус</th><th style="padding: 12px;">Отзыв</th><th style="padding: 12px;"></th></tr></thead><tbody>';
+                let html = '<div class="dash-tresp"><table style="width:100%; border-collapse: collapse;"><thead><tr style="background: #0f2b3d; color: white;"><th style="padding: 12px;">Курс</th><th style="padding: 12px;">Дата</th><th style="padding: 12px;">Оплата</th><th style="padding: 12px;">Статус</th><th style="padding: 12px;">Отзыв</th><th style="padding: 12px;"></th></tr></thead><tbody>';
                 
                 for (let app of apps) {
-                    // Проверяем изменение статуса
                     if (previousStatuses[app.id] && previousStatuses[app.id] !== app.status) {
                         showNotification(`Статус заявки "${app.course_name}" изменён на: ${app.status}`, true);
                     }
@@ -108,20 +107,20 @@
                     } catch(e) {}
                     
                     let statusClass = '';
-                    if (app.status === 'Новая') statusClass = 'status-new';
-                    else if (app.status === 'Идет обучение') statusClass = 'status-progress';
-                    else if (app.status === 'Обучение завершено') statusClass = 'status-completed';
+                    if (app.status === 'Новая') statusClass = 'dash-stnew';
+                    else if (app.status === 'Идет обучение') statusClass = 'dash-stprog';
+                    else if (app.status === 'Обучение завершено') statusClass = 'dash-stcomp';
                     
                     html += `<tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 12px;"><strong>${escapeHtml(app.course_name)}</strong></td>
                         <td style="padding: 12px;">${app.desired_start_date}</td>
                         <td style="padding: 12px;">${app.payment_method}</td>
-                        <td style="padding: 12px;"><span class="status-badge ${statusClass}">${app.status}</span></td>
+                        <td style="padding: 12px;"><span class="dash-sbadge ${statusClass}">${app.status}</span></td>
                         <td style="padding: 12px;">${review ? escapeHtml(review.review_text) : '—'}</td>
                         <td style="padding: 12px;">`;
                     
                     if (app.status === 'Обучение завершено' && !review) {
-                        html += `<button class="btn btn-small" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
+                        html += `<button class="dash-btn dash-btnsm" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
                     }
                     html += `</td></tr>`;
                 }
@@ -129,8 +128,7 @@
                 html += '</tbody></table></div>';
                 container.innerHTML = html;
             } catch (err) {
-                console.error('Ошибка:', err);
-                container.innerHTML = `<div class="text-center" style="color: red; padding: 40px;">❌ Ошибка: ${err.message}</div>`;
+                container.innerHTML = `<div class="dash-txc" style="color: red; padding: 40px;">❌ Ошибка: ${err.message}</div>`;
             }
         }
         
@@ -157,7 +155,6 @@
             document.getElementById('reviewModal').style.display = 'none';
         };
         
-        // Автообновление каждые 10 секунд
         loadApplications();
         setInterval(loadApplications, 10000);
     </script>

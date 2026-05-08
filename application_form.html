@@ -7,58 +7,53 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+    <header class="app-12-hdr">
+        <div class="app-13-hcnt">
+            <div class="app-14-logo"><a href="index.html">Корочки.есть</a></div>
             <div class="burger"><span></span><span></span><span></span></div>
             <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card application-card">
+    <div class="app-20-cont">
+        <div class="app-21-card app-21-acard">
             <h2>Формирование заявки</h2>
             <form id="applicationForm">
-                <div class="form-group">
+                <div class="app-24-fgrp">
                     <label>Наименование курса</label>
                     <select id="courseName" required>
                         <option value="">-- Выберите курс --</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="app-30-fgrp">
                     <label>Желаемая дата начала</label>
                     <input type="date" id="startDate" required>
-                    <div class="error" id="dateError"></div>
+                    <div class="app-33-err" id="dateError"></div>
                 </div>
-                <div class="form-group">
+                <div class="app-36-fgrp">
                     <label>Способ оплаты</label>
                     <select id="paymentMethod" required>
                         <option value="Наличные">Наличные</option>
                         <option value="Карта">Карта</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                <button type="submit" class="app-42-btn app-42-btnp">Отправить заявку</button>
             </form>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="app-47-foot">
+        <div class="app-48-fcont">
+            <div class="app-49-fcol"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="app-50-fcol"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="app-51-fcol"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="app-54-fbot"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
     <script>
-        // Проверяем авторизацию
-        if (!requireAuth()) {
-            throw new Error('Не авторизован');
-        }
-        
-        console.log('Текущий пользователь:', currentUser);
+        if (!requireAuth()) throw new Error('Не авторизован');
         
         async function loadCoursesToSelect() {
             const courses = await getCourses();
@@ -86,10 +81,7 @@
             const paymentMethod = document.getElementById('paymentMethod').value;
             const today = new Date().toISOString().split('T')[0];
             
-            if (!courseName) {
-                alert('Выберите курс');
-                return;
-            }
+            if (!courseName) { alert('Выберите курс'); return; }
             if (startDate < today) {
                 document.getElementById('dateError').textContent = 'Дата не может быть в прошлом';
                 return;
@@ -97,22 +89,16 @@
             document.getElementById('dateError').textContent = '';
             
             try {
-                // Проверяем данные перед отправкой
-                const applicationData = {
+                const result = await createApplication({
                     user: currentUser.id,
                     course_name: courseName,
                     desired_start_date: startDate,
                     payment_method: paymentMethod,
                     status: 'Новая'
-                };
-                console.log('Отправляем заявку:', applicationData);
-                
-                const result = await createApplication(applicationData);
-                console.log('Заявка создана:', result);
+                });
                 alert('Заявка успешно отправлена!');
                 window.location.href = 'dashboard.html';
             } catch(err) {
-                console.error('Ошибка:', err);
                 alert('Ошибка при отправке заявки: ' + err.message);
             }
         });
