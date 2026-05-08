@@ -72,17 +72,23 @@ body {
 }
 
 /* Навигация */
-.indexHTML-16-nav-menu,
-.applicationForm-16-nav-menu,
-.courses-16-nav-menu,
-.dashboard-32-nav-menu,
-.login-16-nav-menu,
-.profile-16-nav-menu,
-.register-16-nav-menu,
-.admin-16-nav-menu {
+.nav-menu {
     display: flex;
     gap: 32px;
     align-items: center;
+}
+
+.nav-menu a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.nav-menu a:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 .indexHTML-16-nav-menu a,
@@ -113,18 +119,18 @@ body {
 }
 
 /* Бургер */
-.indexHTML-15-burger,
-.applicationForm-15-burger,
-.courses-15-burger,
-.dashboard-31-burger,
-.login-15-burger,
-.profile-15-burger,
-.register-15-burger,
-.admin-15-burger {
+.burger {
     display: none;
     flex-direction: column;
     cursor: pointer;
     gap: 5px;
+}
+
+.burger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
 }
 
 .indexHTML-15-burger span,
@@ -142,24 +148,10 @@ body {
 }
 
 @media (max-width: 768px) {
-    .indexHTML-15-burger,
-    .applicationForm-15-burger,
-    .courses-15-burger,
-    .dashboard-31-burger,
-    .login-15-burger,
-    .profile-15-burger,
-    .register-15-burger,
-    .admin-15-burger {
+    .burger {
         display: flex;
     }
-    .indexHTML-16-nav-menu,
-    .applicationForm-16-nav-menu,
-    .courses-16-nav-menu,
-    .dashboard-32-nav-menu,
-    .login-16-nav-menu,
-    .profile-16-nav-menu,
-    .register-16-nav-menu,
-    .admin-16-nav-menu {
+    .nav-menu {
         position: fixed;
         left: -100%;
         top: 70px;
@@ -174,24 +166,10 @@ body {
         z-index: 999;
         box-shadow: 2px 0 12px rgba(0,0,0,0.2);
     }
-    .indexHTML-16-nav-menu.active,
-    .applicationForm-16-nav-menu.active,
-    .courses-16-nav-menu.active,
-    .dashboard-32-nav-menu.active,
-    .login-16-nav-menu.active,
-    .profile-16-nav-menu.active,
-    .register-16-nav-menu.active,
-    .admin-16-nav-menu.active {
+    .nav-menu.active {
         left: 0;
     }
-    .indexHTML-16-nav-menu a,
-    .applicationForm-16-nav-menu a,
-    .courses-16-nav-menu a,
-    .dashboard-32-nav-menu a,
-    .login-16-nav-menu a,
-    .profile-16-nav-menu a,
-    .register-16-nav-menu a,
-    .admin-16-nav-menu a {
+    .nav-menu a {
         font-size: 1.1rem;
         width: 100%;
         padding: 8px 0;
@@ -307,39 +285,14 @@ input:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(44,125,160,0.1);
 }
 
-.applicationForm-33-error,
-.login-31-error,
-.profile-31-error,
-.profile-36-error,
-.profile-41-error,
-.register-25-error,
-.register-26-error,
-.register-27-error {
+.error {
     color: #e53e3e;
     font-size: 0.85rem;
     margin-top: 6px;
 }
 
 /* ===== КНОПКИ ===== */
-.applicationForm-42-btn,
-.courses-35-btn,
-.courses-97-btn,
-.dashboard-48-btn,
-.dashboard-49-btn,
-.dashboard-96-btn,
-.dashboard-132-btn,
-.login-33-btn,
-.profile-44-btn,
-.register-28-btn,
-.admin-31-btn,
-.admin-38-btn,
-.admin-54-btn,
-.admin-91-btn,
-.admin-141-btn,
-.admin-157-btn,
-.indexHTML-26-btn,
-.indexHTML-27-btn,
-.indexHTML-90-btn {
+.btn {
     background: #2c7da0;
     color: white;
     padding: 10px 20px;
@@ -351,6 +304,31 @@ input:focus, select:focus {
     transition: 0.2s;
     text-decoration: none;
     display: inline-block;
+}
+
+.btn:hover {
+    background: #1f5e7a;
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: #2c7da0;
+    padding: 12px 28px;
+    font-size: 1rem;
+}
+
+.btn-secondary {
+    background: #64748b;
+}
+
+.btn-secondary:hover {
+    background: #475569;
+}
+
+.btn-small {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    border-radius: 8px;
 }
 
 .applicationForm-42-btn:hover,
@@ -928,16 +906,16 @@ tr:nth-child(even) {
 .indexHTML-130-text-center { text-align: center; }
 
 /* Статусы заявок */
-.dashboard-128-status-badge {
+.status-badge {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 500;
 }
-.dashboard-119-status-new { background: #fee2e2; color: #991b1b; }
-.dashboard-120-status-progress { background: #fef3c7; color: #92400e; }
-.dashboard-121-status-completed { background: #d1fae5; color: #065f46; }
+.status-new { background: #fee2e2; color: #991b1b; }
+.status-progress { background: #fef3c7; color: #92400e; }
+.status-completed { background: #d1fae5; color: #065f46; }
 
 .applications-table {
     width: 100%;

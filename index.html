@@ -12,8 +12,8 @@
     <header class="indexHTML-12-header">
         <div class="indexHTML-13-header-container">
             <div class="indexHTML-14-logo"><a href="index.html">Корочки.есть</a></div>
-            <div class="indexHTML-15-burger" data-role="burger"><span></span><span></span><span></span></div>
-            <nav class="indexHTML-16-nav-menu" data-role="nav-menu"></nav>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
         </div>
     </header>
     
@@ -23,7 +23,7 @@
             <p>Дополнительное профессиональное образование</p>
             <p style="font-size: 1rem; opacity: 0.85;">Повышайте квалификацию, получайте удостоверения, развивайте карьеру</p>
             <div class="indexHTML-25-hero-buttons">
-                <a href="courses.html" class="indexHTML-26-btn indexHTML-26-btn-primary">Каталог курсов</a>
+                <a href="courses.html" class="btn btn-primary">Каталог курсов</a>
                 <a href="register.html" class="indexHTML-27-btn indexHTML-27-btn-secondary">Зарегистрироваться</a>
             </div>
         </div>
@@ -86,7 +86,7 @@
                     <div class="indexHTML-87-course-price">${c.price.toLocaleString()} ₽</div>
                     <span class="indexHTML-88-course-badge">${c.level}</span>
                     <div style="margin-top: 20px;">
-                        <button class="indexHTML-90-btn indexHTML-90-btn-primary indexHTML-90-btn-small" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Записаться</button>
+                        <button class="btn btn-primary btn-small" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Записаться</button>
                     </div>
                 </div>
             `).join('');

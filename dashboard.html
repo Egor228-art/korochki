@@ -45,8 +45,8 @@
             <h3>Оставить отзыв</h3>
             <textarea id="dashboard-46-reviewText" rows="4" style="width:100%" placeholder="Поделитесь впечатлениями..."></textarea>
             <div class="dashboard-47-modal-buttons">
-                <button id="dashboard-48-submitReviewBtn" class="dashboard-48-btn dashboard-48-btn-primary">Отправить</button>
-                <button id="dashboard-49-closeReviewBtn" class="dashboard-49-btn dashboard-49-btn-secondary">Отмена</button>
+                <button id="dashboard-48-submitReviewBtn" class="btn btn-primary">Отправить</button>
+                <button id="dashboard-49-closeReviewBtn" class="btn btn-secondary">Отмена</button>
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@
                         <td style="padding: 12px;">`;
                     
                     if (app.status === 'Обучение завершено' && !review) {
-                        html += `<button class="dashboard-132-btn dashboard-132-btn-small" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
+                        html += `<button class="btn btn-small" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
                     }
                     html += `</td></tr>`;
                 }
