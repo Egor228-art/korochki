@@ -91,7 +91,7 @@ async function updateUserProfile(userId, data) {
 // Courses
 async function getCourses() {
     const result = await api('GET', '/api/courses');
-    return result.courses || [];
+    return result.items || [];  // было result.courses, надо result.items
 }
 
 async function createCourse(data) {
@@ -105,7 +105,7 @@ async function deleteCourse(id) {
 // Applications
 async function getUserApplications(userId) {
     const result = await api('GET', `/api/applications?userId=${userId}`);
-    return result.applications || [];
+    return result.applications || [];  // тут правильно
 }
 
 async function getAllApplications() {
