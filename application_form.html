@@ -7,48 +7,48 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="applicationForm-12-header">
-        <div class="applicationForm-13-header-container">
-            <div class="applicationForm-14-logo"><a href="index.html">Корочки.есть</a></div>
-            <div class="applicationForm-15-burger"><span></span><span></span><span></span></div>
-            <nav class="applicationForm-16-nav-menu"></nav>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="applicationForm-20-container">
-        <div class="applicationForm-21-card applicationForm-21-application-card">
+    <div class="container">
+        <div class="card application-card">
             <h2>Формирование заявки</h2>
-            <form id="applicationForm-23-applicationForm">
-                <div class="applicationForm-24-form-group">
+            <form id="applicationForm">
+                <div class="form-group">
                     <label>Наименование курса</label>
-                    <select id="applicationForm-26-courseName" required>
+                    <select id="courseName" required>
                         <option value="">-- Выберите курс --</option>
                     </select>
                 </div>
-                <div class="applicationForm-30-form-group">
+                <div class="form-group">
                     <label>Желаемая дата начала</label>
-                    <input type="date" id="applicationForm-32-startDate" required>
-                    <div class="error" id="applicationForm-33-dateError"></div>
+                    <input type="date" id="startDate" required>
+                    <div class="error" id="dateError"></div>
                 </div>
-                <div class="applicationForm-35-form-group">
+                <div class="form-group">
                     <label>Способ оплаты</label>
-                    <select id="applicationForm-37-paymentMethod" required>
+                    <select id="paymentMethod" required>
                         <option value="Наличные">Наличные</option>
                         <option value="Карта">Карта</option>
                     </select>
                 </div>
-                <button type="submit" class="applicationForm-42-btn applicationForm-42-btn-primary">Отправить заявку</button>
+                <button type="submit" class="btn btn-primary">Отправить заявку</button>
             </form>
         </div>
     </div>
     
-    <footer class="applicationForm-47-footer">
-        <div class="applicationForm-48-footer-container">
-            <div class="applicationForm-49-footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="applicationForm-50-footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="applicationForm-51-footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="applicationForm-53-footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -62,7 +62,7 @@
         
         async function loadCoursesToSelect() {
             const courses = await getCourses();
-            const select = document.getElementById('applicationForm-26-courseName');
+            const select = document.getElementById('courseName');
             select.innerHTML = '<option value="">-- Выберите курс --</option>';
             courses.forEach(c => {
                 const option = document.createElement('option');
@@ -78,12 +78,12 @@
             }
         }
         
-        document.getElementById('applicationForm-23-applicationForm').addEventListener('submit', async (e) => {
+        document.getElementById('applicationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const courseName = document.getElementById('applicationForm-26-courseName').value;
-            const startDate = document.getElementById('applicationForm-32-startDate').value;
-            const paymentMethod = document.getElementById('applicationForm-37-paymentMethod').value;
+            const courseName = document.getElementById('courseName').value;
+            const startDate = document.getElementById('startDate').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
             const today = new Date().toISOString().split('T')[0];
             
             if (!courseName) {
@@ -91,10 +91,10 @@
                 return;
             }
             if (startDate < today) {
-                document.getElementById('applicationForm-33-dateError').textContent = 'Дата не может быть в прошлом';
+                document.getElementById('dateError').textContent = 'Дата не может быть в прошлом';
                 return;
             }
-            document.getElementById('applicationForm-33-dateError').textContent = '';
+            document.getElementById('dateError').textContent = '';
             
             try {
                 // Проверяем данные перед отправкой

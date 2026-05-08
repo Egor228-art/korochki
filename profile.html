@@ -7,49 +7,49 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="profile-12-header">
-        <div class="profile-13-header-container">
-            <div class="profile-14-logo"><a href="index.html">Корочки.есть</a></div>
-            <div class="profile-15-burger"><span></span><span></span><span></span></div>
-            <nav class="profile-16-nav-menu"></nav>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="profile-20-container">
-        <div class="profile-21-card" style="max-width: 600px; margin: 30px auto;">
+    <div class="container">
+        <div class="card" style="max-width: 600px; margin: 30px auto;">
             <h2>👤 Мой профиль</h2>
-            <form id="profile-23-profileForm">
-                <div class="profile-24-form-group">
+            <form id="profileForm">
+                <div class="form-group">
                     <label>Email (логин)</label>
-                    <input type="email" id="profile-26-email" readonly style="background: #f1f5f9;">
+                    <input type="email" id="email" readonly style="background: #f1f5f9;">
                 </div>
-                <div class="profile-28-form-group">
+                <div class="form-group">
                     <label>ФИО</label>
-                    <input type="text" id="profile-30-full_name" required>
-                    <div class="error" id="profile-31-nameError"></div>
+                    <input type="text" id="full_name" required>
+                    <div class="error" id="nameError"></div>
                 </div>
-                <div class="profile-33-form-group">
+                <div class="form-group">
                     <label>Телефон</label>
-                    <input type="text" id="profile-35-phone" placeholder="8(999)123-45-67" required>
-                    <div class="profile-36-error" id="profile-36-phoneError"></div>
+                    <input type="text" id="phone" placeholder="8(999)123-45-67" required>
+                    <div class="error" id="phoneError"></div>
                 </div>
-                <div class="profile-38-form-group">
+                <div class="form-group">
                     <label>Новый пароль (оставьте пустым, чтобы не менять)</label>
-                    <input type="password" id="profile-40-password" placeholder="Минимум 8 символов">
-                    <div class="profile-41-error" id="profile-41-passwordError"></div>
+                    <input type="password" id="password" placeholder="Минимум 8 символов">
+                    <div class="error" id="passwordError"></div>
                 </div>
-                <button type="submit" class="profile-44-btn profile-44-btn-primary">💾 Сохранить изменения</button>
+                <button type="submit" class="btn btn-primary">💾 Сохранить изменения</button>
             </form>
         </div>
     </div>
     
-    <footer class="profile-49-footer">
-        <div class="profile-50-footer-container">
-            <div class="profile-51-footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="profile-52-footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="profile-53-footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="profile-55-footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -57,32 +57,32 @@
         if (!requireAuth()) throw new Error('Не авторизован');
         
         // Заполняем форму данными пользователя
-        document.getElementById('profile-26-email').value = currentUser.email;
-        document.getElementById('profile-30-full_name').value = currentUser.full_name || '';
-        document.getElementById('profile-35-phone').value = currentUser.phone || '';
+        document.getElementById('email').value = currentUser.email;
+        document.getElementById('full_name').value = currentUser.full_name || '';
+        document.getElementById('phone').value = currentUser.phone || '';
         
-        document.getElementById('profile-35-phone').addEventListener('input', (e) => phoneMask(e.target));
+        document.getElementById('phone').addEventListener('input', (e) => phoneMask(e.target));
         
-        document.getElementById('profile-23-profileForm').addEventListener('submit', async (e) => {
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const full_name = document.getElementById('profile-30-full_name').value.trim();
-            const phone = document.getElementById('profile-35-phone').value.trim();
-            const password = document.getElementById('profile-40-password').value;
+            const full_name = document.getElementById('full_name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
             
-            document.querySelectorAll('.profile-76-error').forEach(el => el.textContent = '');
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
             let hasError = false;
             
             if (!/^[а-яА-ЯёЁ\s\-]+$/.test(full_name)) {
-                document.getElementById('profile-31-nameError').textContent = 'ФИО: только кириллица';
+                document.getElementById('nameError').textContent = 'ФИО: только кириллица';
                 hasError = true;
             }
             if (!/^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(phone)) {
-                document.getElementById('profile-36-phoneError').textContent = 'Формат: 8(XXX)XXX-XX-XX';
+                document.getElementById('phoneError').textContent = 'Формат: 8(XXX)XXX-XX-XX';
                 hasError = true;
             }
             if (password && password.length < 8) {
-                document.getElementById('profile-41-passwordError').textContent = 'Пароль не менее 8 символов';
+                document.getElementById('passwordError').textContent = 'Пароль не менее 8 символов';
                 hasError = true;
             }
             if (hasError) return;
