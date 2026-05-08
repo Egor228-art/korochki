@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     
     if (req.method === 'OPTIONS') return res.status(200).end();
 
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL);
 
     try {
         if (req.method === 'GET') {
