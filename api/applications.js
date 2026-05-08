@@ -45,7 +45,10 @@ module.exports = async (req, res) => {
         }
         
         if (req.method === 'PATCH') {
-            const id = req.url.split('/').pop();
+            // Правильно извлекаем ID из URL
+            const urlParts = req.url.split('?')[0].split('/');
+            const id = urlParts[urlParts.length - 1];
+            
             const { status } = req.body;
             const result = await sql`
                 UPDATE applications SET status = ${status} WHERE id = ${id}

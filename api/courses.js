@@ -26,7 +26,9 @@ module.exports = async (req, res) => {
         }
         
         if (req.method === 'DELETE') {
-            const id = req.url.split('/').pop();
+            const urlParts = req.url.split('?')[0].split('/');
+            const id = urlParts[urlParts.length - 1];
+            
             await sql`DELETE FROM courses WHERE id = ${id}`;
             return res.json({ success: true });
         }

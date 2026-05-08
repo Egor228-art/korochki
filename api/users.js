@@ -16,8 +16,8 @@ module.exports = async (req, res) => {
         }
         
         if (req.method === 'PATCH') {
-            const id = req.url.split('/').pop();
-            const { full_name, phone, password } = req.body;
+            const urlParts = req.url.split('?')[0].split('/');
+            const id = urlParts[urlParts.length - 1];
             
             if (password) {
                 const result = await sql`
