@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
             
             if (applicationId) {
                 const reviews = await sql`SELECT * FROM reviews WHERE application_id = ${applicationId}`;
-                return res.json({ items: reviews });
+                return res.json({ reviews: reviews });
             }
             
             const reviews = await sql`
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
                 JOIN applications a ON r.application_id = a.id
                 ORDER BY r.created DESC
             `;
-            return res.json({ items: reviews });
+            return res.json({ reviews: reviews });
         }
         
         if (req.method === 'POST') {

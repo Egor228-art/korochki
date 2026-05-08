@@ -7,12 +7,12 @@ module.exports = async (req, res) => {
     
     if (req.method === 'OPTIONS') return res.status(200).end();
 
-    const sql = neon(process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL);
+    const sql = neon(process.env.POSTGRES_URL);
 
     try {
         if (req.method === 'GET') {
             const url = new URL(req.url, 'http://localhost');
-            const userId = url.searchParams.get('user');
+            const userId = url.searchParams.get('userId');  // ← поменял 'user' на 'userId'
             
             let applications;
             if (userId) {
@@ -31,14 +31,14 @@ module.exports = async (req, res) => {
                     ORDER BY a.created DESC
                 `;
             }
-            return res.json({ items: applications });
+            return res.json({ applications: applications });  // ← поле items → applications
         }
         
         if (req.method === 'POST') {
-            const { user_id, course_name, desired_start_date, payment_method } = req.body;
+            const { user, course_name, desired_start_date, payment_method } = req.body;  // ← user вместо user_id
             const result = await sql`
                 INSERT INTO applications (user_id, course_name, desired_start_date, payment_method, status)
-                VALUES (${user_id}, ${course_name}, ${desired_start_date}, ${payment_method}, 'Новая')
+                VALUES (${user}, ${course_name}, ${desired_start_date}, ${payment_method}, 'Новая')
                 RETURNING *
             `;
             return res.json(result[0]);

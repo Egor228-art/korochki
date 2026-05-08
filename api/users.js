@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     try {
         if (req.method === 'GET') {
             const users = await sql`SELECT id, email, full_name, phone, is_admin FROM users`;
-            return res.json({ items: users });
+            return res.json({ users: users });
         }
         
         if (req.method === 'PATCH') {
