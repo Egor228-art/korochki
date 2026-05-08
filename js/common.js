@@ -91,7 +91,7 @@ async function updateUserProfile(userId, data) {
 // Courses
 async function getCourses() {
     const result = await api('GET', '/api/courses');
-    return result.items || [];  // было result.courses, надо result.items
+    return result.items || [];
 }
 
 async function createCourse(data) {
@@ -105,7 +105,7 @@ async function deleteCourse(id) {
 // Applications
 async function getUserApplications(userId) {
     const result = await api('GET', `/api/applications?userId=${userId}`);
-    return result.applications || [];  // тут правильно
+    return result.applications || [];
 }
 
 async function getAllApplications() {
@@ -170,15 +170,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initBurger() {
-    const burger = document.querySelector('.burger');
-    const navMenu = document.querySelector('.nav-menu');
+    const burger = document.querySelector('[data-role="burger"]');
+    const navMenu = document.querySelector('[data-role="nav-menu"]');
     if (burger && navMenu) {
         burger.addEventListener('click', () => navMenu.classList.toggle('active'));
     }
 }
 
 function updateNavigation() {
-    const navMenu = document.querySelector('.nav-menu');
+    const navMenu = document.querySelector('[data-role="nav-menu"]');
     if (!navMenu) return;
     
     let html = '';
