@@ -7,99 +7,72 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+    <header class="prf-12-hdr">
+        <div class="prf-13-hcnt">
+            <div class="prf-14-logo"><a href="index.html">Корочки.есть</a></div>
             <div class="burger"><span></span><span></span><span></span></div>
             <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card" style="max-width: 600px; margin: 30px auto;">
+    <div class="prf-20-cont">
+        <div class="prf-21-card" style="max-width: 600px; margin: 30px auto;">
             <h2>👤 Мой профиль</h2>
             <form id="profileForm">
-                <div class="form-group">
-                    <label>Email (логин)</label>
-                    <input type="email" id="email" readonly style="background: #f1f5f9;">
-                </div>
-                <div class="form-group">
-                    <label>ФИО</label>
-                    <input type="text" id="full_name" required>
-                    <div class="error" id="nameError"></div>
-                </div>
-                <div class="form-group">
-                    <label>Телефон</label>
-                    <input type="text" id="phone" placeholder="8(999)123-45-67" required>
-                    <div class="error" id="phoneError"></div>
-                </div>
-                <div class="form-group">
-                    <label>Новый пароль (оставьте пустым, чтобы не менять)</label>
-                    <input type="password" id="password" placeholder="Минимум 8 символов">
-                    <div class="error" id="passwordError"></div>
-                </div>
-                <button type="submit" class="btn btn-primary">💾 Сохранить изменения</button>
+                <div class="prf-24-fgrp"><label>Email (логин)</label><input type="email" id="email" readonly style="background: #f1f5f9;"></div>
+                <div class="prf-28-fgrp"><label>ФИО</label><input type="text" id="full_name" required><div class="prf-28-err" id="nameError"></div></div>
+                <div class="prf-29-fgrp"><label>Телефон</label><input type="text" id="phone" placeholder="8(999)123-45-67" required><div class="prf-29-err" id="phoneError"></div></div>
+                <div class="prf-30-fgrp"><label>Новый пароль</label><input type="password" id="password" placeholder="Минимум 8 символов"><div class="prf-30-err" id="passwordError"></div></div>
+                <button type="submit" class="prf-31-btn prf-31-btnp">💾 Сохранить изменения</button>
             </form>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="prf-36-foot">
+        <div class="prf-37-fcont">
+            <div class="prf-38-fcol"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="prf-39-fcol"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="prf-40-fcol"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="prf-43-fbot"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
     <script>
         if (!requireAuth()) throw new Error('Не авторизован');
         
-        // Заполняем форму данными пользователя
         document.getElementById('email').value = currentUser.email;
         document.getElementById('full_name').value = currentUser.full_name || '';
         document.getElementById('phone').value = currentUser.phone || '';
-        
         document.getElementById('phone').addEventListener('input', (e) => phoneMask(e.target));
         
         document.getElementById('profileForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const full_name = document.getElementById('full_name').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const password = document.getElementById('password').value;
             
-            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            document.querySelectorAll('.prf-err').forEach(el => el.textContent = '');
             let hasError = false;
             
             if (!/^[а-яА-ЯёЁ\s\-]+$/.test(full_name)) {
-                document.getElementById('nameError').textContent = 'ФИО: только кириллица';
-                hasError = true;
+                document.getElementById('nameError').textContent = 'ФИО: только кириллица'; hasError = true;
             }
             if (!/^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(phone)) {
-                document.getElementById('phoneError').textContent = 'Формат: 8(XXX)XXX-XX-XX';
-                hasError = true;
+                document.getElementById('phoneError').textContent = 'Формат: 8(XXX)XXX-XX-XX'; hasError = true;
             }
             if (password && password.length < 8) {
-                document.getElementById('passwordError').textContent = 'Пароль не менее 8 символов';
-                hasError = true;
+                document.getElementById('passwordError').textContent = 'Пароль не менее 8 символов'; hasError = true;
             }
             if (hasError) return;
             
             try {
                 const updateData = { full_name, phone };
-                if (password) {
-                    updateData.password = password;
-                    updateData.passwordConfirm = password;
-                }
+                if (password) updateData.password = password;
                 await updateUserProfile(currentUser.id, updateData);
-                
-                // Обновляем текущего пользователя
                 currentUser.full_name = full_name;
                 currentUser.phone = phone;
-                localStorage.setItem('pb_user', JSON.stringify(currentUser));
-                
+                localStorage.setItem('user', JSON.stringify(currentUser));
                 alert('✅ Профиль успешно обновлён!');
                 updateNavigation();
             } catch(err) {

@@ -9,62 +9,62 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+    <header class="idx-13-hdr">
+        <div class="idx-14-hcnt">
+            <div class="idx-15-logo"><a href="index.html">Корочки.есть</a></div>
             <div class="burger"><span></span><span></span><span></span></div>
             <nav class="nav-menu"></nav>
         </div>
     </header>
     
-    <div class="hero">
-        <div class="hero-content">
+    <div class="idx-24-hero">
+        <div class="idx-25-hcont">
             <h1>Корочки.есть</h1>
             <p>Дополнительное профессиональное образование</p>
             <p style="font-size: 1rem; opacity: 0.85;">Повышайте квалификацию, получайте удостоверения, развивайте карьеру</p>
-            <div class="hero-buttons">
-                <a href="courses.html" class="btn btn-primary">Каталог курсов</a>
-                <a href="register.html" class="btn btn-secondary">Зарегистрироваться</a>
+            <div class="idx-29-hbtn">
+                <a href="courses.html" class="idx-30-btn idx-30-btnp">Каталог курсов</a>
+                <a href="register.html" class="idx-31-btn idx-31-btns">Зарегистрироваться</a>
             </div>
         </div>
     </div>
     
-    <div class="container">
-        <div class="section">
+    <div class="idx-36-cont">
+        <div class="idx-37-sect">
             <h2>Популярные курсы</h2>
-            <div class="course-grid-home" id="popularCourses">Загрузка...</div>
+            <div class="idx-39-cgridh" id="popularCourses">Загрузка...</div>
         </div>
         
-        <div class="section">
+        <div class="idx-42-sect">
             <h2>Как записаться на обучение</h2>
-            <div class="steps-grid">
-                <div class="step-card"><div class="step-number">1</div><h3>Выберите курс</h3><p>Изучите каталог и выберите подходящую программу</p></div>
-                <div class="step-card"><div class="step-number">2</div><h3>Оставьте заявку</h3><p>Заполните форму и укажите удобную дату старта</p></div>
-                <div class="step-card"><div class="step-number">3</div><h3>Начните обучение</h3><p>После подтверждения заявки получите доступ к материалам</p></div>
+            <div class="idx-44-stgrid">
+                <div class="idx-45-stcard"><div class="idx-45-stnum">1</div><h3>Выберите курс</h3><p>Изучите каталог и выберите подходящую программу</p></div>
+                <div class="idx-46-stcard"><div class="idx-46-stnum">2</div><h3>Оставьте заявку</h3><p>Заполните форму и укажите удобную дату старта</p></div>
+                <div class="idx-47-stcard"><div class="idx-47-stnum">3</div><h3>Начните обучение</h3><p>После подтверждения заявки получите доступ к материалам</p></div>
             </div>
         </div>
         
-        <div class="section">
+        <div class="idx-51-sect">
             <h2>Реальные отзывы выпускников</h2>
-            <div class="reviews-grid" id="reviewsList">Загрузка отзывов...</div>
+            <div class="idx-53-rgrid" id="reviewsList">Загрузка отзывов...</div>
         </div>
         
-        <div class="section stats">
-            <div class="stats-grid">
-                <div class="stat"><span class="stat-number">5000+</span><div>Выпускников</div></div>
-                <div class="stat"><span class="stat-number">50+</span><div>Программ</div></div>
-                <div class="stat"><span class="stat-number">98%</span><div>Довольны обучением</div></div>
+        <div class="idx-56-sect idx-56-stats">
+            <div class="idx-57-sgrid">
+                <div class="idx-58-sitem"><span class="idx-58-snum">5000+</span><div>Выпускников</div></div>
+                <div class="idx-59-sitem"><span class="idx-59-snum">50+</span><div>Программ</div></div>
+                <div class="idx-60-sitem"><span class="idx-60-snum">98%</span><div>Довольны обучением</div></div>
             </div>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="idx-65-foot">
+        <div class="idx-66-fcont">
+            <div class="idx-67-fcol"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="idx-68-fcol"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="idx-69-fcol"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="idx-72-fbot"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -74,19 +74,19 @@
             const courses = await getCourses();
             
             if (!courses.length) {
-                container.innerHTML = '<div class="text-center">Курсы временно недоступны</div>';
+                container.innerHTML = '<div class="idx-txc">Курсы временно недоступны</div>';
                 return;
             }
             
             const popular = courses.slice(0, 6);
             container.innerHTML = popular.map(c => `
-                <div class="course-card-home">
+                <div class="idx-ccardh">
                     <h3>${escapeHtml(c.name)}</h3>
                     <p style="color: #64748b; font-size: 0.9rem;">${c.hours} часов обучения</p>
-                    <div class="course-price">${c.price.toLocaleString()} ₽</div>
-                    <span class="course-badge">${c.level}</span>
+                    <div class="idx-cprice">${c.price.toLocaleString()} ₽</div>
+                    <span class="idx-cbadge">${c.level}</span>
                     <div style="margin-top: 20px;">
-                        <button class="btn btn-primary btn-small" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Записаться</button>
+                        <button class="idx-btn idx-btnp idx-btnsm" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Записаться</button>
                     </div>
                 </div>
             `).join('');
@@ -96,18 +96,15 @@
             const container = document.getElementById('reviewsList');
             try {
                 const allReviews = await getAllReviews();
-                console.log('Загружено отзывов:', allReviews.length);
                 
                 if (!allReviews.length) {
-                    // Показываем демо-отзывы, если реальных нет
                     container.innerHTML = `
-                        <div class="review-card"><div class="review-author"><div class="review-avatar">А</div><div><div class="review-name">Анна Смирнова</div><div class="review-course">Управление проектами</div></div></div><div class="review-text">"Отличный курс! Преподаватели - практики, много живых примеров. После обучения получила повышение на работе."</div></div>
-                        <div class="review-card"><div class="review-author"><div class="review-avatar">Д</div><div><div class="review-name">Дмитрий Волков</div><div class="review-course">Аналитика данных</div></div></div><div class="review-text">"Материал структурирован, домашние задания проверяют быстро. Рекомендую!"</div></div>
+                        <div class="idx-rcard"><div class="idx-rauth"><div class="idx-ravat">А</div><div><div class="idx-rname">Анна Смирнова</div><div class="idx-rcourse">Управление проектами</div></div></div><div class="idx-rtext">"Отличный курс! Преподаватели - практики, много живых примеров."</div></div>
+                        <div class="idx-rcard"><div class="idx-rauth"><div class="idx-ravat">Д</div><div><div class="idx-rname">Дмитрий Волков</div><div class="idx-rcourse">Аналитика данных</div></div></div><div class="idx-rtext">"Материал структурирован, рекомендую!"</div></div>
                     `;
                     return;
                 }
                 
-                // Берём случайные 4 отзыва (или меньше, если их мало)
                 const shuffled = [...allReviews];
                 for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -116,20 +113,19 @@
                 const randomReviews = shuffled.slice(0, 4);
                 
                 container.innerHTML = randomReviews.map(r => `
-                    <div class="review-card">
-                        <div class="review-author">
-                            <div class="review-avatar">${escapeHtml(r.user_name?.charAt(0) || '?')}</div>
+                    <div class="idx-rcard">
+                        <div class="idx-rauth">
+                            <div class="idx-ravat">${escapeHtml(r.user_name?.charAt(0) || '?')}</div>
                             <div>
-                                <div class="review-name">${escapeHtml(r.user_name || 'Выпускник')}</div>
-                                <div class="review-course">${escapeHtml(r.course_name || 'Курс ДПО')}</div>
+                                <div class="idx-rname">${escapeHtml(r.user_name || 'Выпускник')}</div>
+                                <div class="idx-rcourse">${escapeHtml(r.course_name || 'Курс ДПО')}</div>
                             </div>
                         </div>
-                        <div class="review-text">"${escapeHtml(r.review_text)}"</div>
+                        <div class="idx-rtext">"${escapeHtml(r.review_text)}"</div>
                     </div>
                 `).join('');
             } catch(e) {
-                console.error('Ошибка загрузки отзывов:', e);
-                container.innerHTML = '<div class="text-center">Отзывы временно недоступны</div>';
+                container.innerHTML = '<div class="idx-txc">Отзывы временно недоступны</div>';
             }
         }
         
