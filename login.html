@@ -7,40 +7,40 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
-            <div class="burger"><span></span><span></span><span></span></div>
-            <nav class="nav-menu"></nav>
+    <header class="login-12-header">
+        <div class="login-13-header-container">
+            <div class="login-14-logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="login-15-burger"><span></span><span></span><span></span></div>
+            <nav class="login-16-nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card" style="max-width: 500px; margin: 50px auto;">
+    <div class="login-20-container">
+        <div class="login-21-card" style="max-width: 500px; margin: 50px auto;">
             <h2>Вход в систему</h2>
-            <form id="loginForm">
-                <div class="form-group">
+            <form id="login-23-loginForm">
+                <div class="login-24-form-group">
                     <label>Email</label>
-                    <input type="email" id="email" required>
+                    <input type="email" id="login-26-email" required>
                 </div>
-                <div class="form-group">
+                <div class="login-28-form-group">
                     <label>Пароль</label>
-                    <input type="password" id="password" required>
-                    <div class="error" id="loginError"></div>
+                    <input type="password" id="login-30-password" required>
+                    <div class="login-31-error" id="login-31-loginError"></div>
                 </div>
-                <button type="submit" class="btn">Войти</button>
+                <button type="submit" class="login-33-btn">Войти</button>
             </form>
-            <p class="mt-20">Нет аккаунта? <a href="register.html">Регистрация</a></p>
+            <p class="login-35-mt-20">Нет аккаунта? <a href="register.html">Регистрация</a></p>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="login-39-footer">
+        <div class="login-40-footer-container">
+            <div class="login-41-footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="login-42-footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="login-43-footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="login-45-footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -50,11 +50,11 @@
         localStorage.removeItem('pb_token');
         currentUser = null;
         
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById('login-23-loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('loginError');
+            const email = document.getElementById('login-26-email').value.trim();
+            const password = document.getElementById('login-30-password').value;
+            const errorDiv = document.getElementById('login-31-loginError');
             
             try {
                 console.log('Попытка входа:', email);

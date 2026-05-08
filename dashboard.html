@@ -6,7 +6,7 @@
     <title>Мои заявки - Корочки.есть</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .notification {
+        .dashboard-10-notification {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -15,49 +15,49 @@
             padding: 12px 24px;
             border-radius: 12px;
             z-index: 10000;
-            animation: slideIn 0.3s ease;
+            animation: dashboard-19-slideIn 0.3s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        @keyframes slideIn {
+        @keyframes dashboard-19-slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
-            <div class="burger"><span></span><span></span><span></span></div>
-            <nav class="nav-menu"></nav>
+    <header class="dashboard-28-header">
+        <div class="dashboard-29-header-container">
+            <div class="dashboard-30-logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="dashboard-31-burger"><span></span><span></span><span></span></div>
+            <nav class="dashboard-32-nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card">
+    <div class="dashboard-36-container">
+        <div class="dashboard-37-card">
             <h2>Мои заявки на обучение</h2>
-            <div id="applicationsList">Загрузка...</div>
+            <div id="dashboard-39-applicationsList">Загрузка...</div>
         </div>
     </div>
     
-    <div id="reviewModal" class="modal">
-        <div class="modal-content">
+    <div id="dashboard-43-reviewModal" class="dashboard-43-modal">
+        <div class="dashboard-44-modal-content">
             <h3>Оставить отзыв</h3>
-            <textarea id="reviewText" rows="4" style="width:100%" placeholder="Поделитесь впечатлениями..."></textarea>
-            <div class="modal-buttons">
-                <button id="submitReviewBtn" class="btn btn-primary">Отправить</button>
-                <button id="closeReviewBtn" class="btn btn-secondary">Отмена</button>
+            <textarea id="dashboard-46-reviewText" rows="4" style="width:100%" placeholder="Поделитесь впечатлениями..."></textarea>
+            <div class="dashboard-47-modal-buttons">
+                <button id="dashboard-48-submitReviewBtn" class="dashboard-48-btn dashboard-48-btn-primary">Отправить</button>
+                <button id="dashboard-49-closeReviewBtn" class="dashboard-49-btn dashboard-49-btn-secondary">Отмена</button>
             </div>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="dashboard-54-footer">
+        <div class="dashboard-55-footer-container">
+            <div class="dashboard-56-footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="dashboard-57-footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="dashboard-58-footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="dashboard-60-footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -69,7 +69,7 @@
         
         function showNotification(message, isSuccess = true) {
             const notification = document.createElement('div');
-            notification.className = 'notification';
+            notification.className = 'dashboard-76-notification';
             notification.style.background = isSuccess ? '#2c7da0' : '#e53e3e';
             notification.textContent = message;
             document.body.appendChild(notification);
@@ -77,23 +77,23 @@
         }
         
         async function loadApplications() {
-            const container = document.getElementById('applicationsList');
-            container.innerHTML = '<div class="text-center">Загрузка заявок...</div>';
+            const container = document.getElementById('dashboard-39-applicationsList');
+            container.innerHTML = '<div class="dashboard-87-text-center">Загрузка заявок...</div>';
             
             try {
                 const apps = await getUserApplications(currentUser.id);
                 
                 if (!apps.length) {
                     container.innerHTML = `
-                        <div class="text-center" style="padding: 40px;">
+                        <div class="dashboard-94-text-center" style="padding: 40px;">
                             <p>📭 У вас пока нет заявок</p>
-                            <a href="courses.html" class="btn btn-primary" style="margin-top: 16px;">Перейти к курсам</a>
+                            <a href="courses.html" class="dashboard-96-btn dashboard-96-btn-primary" style="margin-top: 16px;">Перейти к курсам</a>
                         </div>
                     `;
                     return;
                 }
                 
-                let html = '<div class="table-responsive"><table style="width:100%; border-collapse: collapse;"><thead><tr style="background: #0f2b3d; color: white;"><th style="padding: 12px;">Курс</th><th style="padding: 12px;">Дата</th><th style="padding: 12px;">Оплата</th><th style="padding: 12px;">Статус</th><th style="padding: 12px;">Отзыв</th><th style="padding: 12px;"></th></tr></thead><tbody>';
+                let html = '<div class="dashboard-101-table-responsive"><table style="width:100%; border-collapse: collapse;"><thead><tr style="background: #0f2b3d; color: white;"><th style="padding: 12px;">Курс</th><th style="padding: 12px;">Дата</th><th style="padding: 12px;">Оплата</th><th style="padding: 12px;">Статус</th><th style="padding: 12px;">Отзыв</th><th style="padding: 12px;"></th></tr></thead><tbody>';
                 
                 for (let app of apps) {
                     // Проверяем изменение статуса
@@ -108,20 +108,20 @@
                     } catch(e) {}
                     
                     let statusClass = '';
-                    if (app.status === 'Новая') statusClass = 'status-new';
-                    else if (app.status === 'Идет обучение') statusClass = 'status-progress';
-                    else if (app.status === 'Обучение завершено') statusClass = 'status-completed';
+                    if (app.status === 'Новая') statusClass = 'dashboard-119-status-new';
+                    else if (app.status === 'Идет обучение') statusClass = 'dashboard-120-status-progress';
+                    else if (app.status === 'Обучение завершено') statusClass = 'dashboard-121-status-completed';
                     
                     html += `<tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 12px;"><strong>${escapeHtml(app.course_name)}</strong></td>
                         <td style="padding: 12px;">${app.desired_start_date}</td>
                         <td style="padding: 12px;">${app.payment_method}</td>
-                        <td style="padding: 12px;"><span class="status-badge ${statusClass}">${app.status}</span></td>
+                        <td style="padding: 12px;"><span class="dashboard-128-status-badge ${statusClass}">${app.status}</span></td>
                         <td style="padding: 12px;">${review ? escapeHtml(review.review_text) : '—'}</td>
                         <td style="padding: 12px;">`;
                     
                     if (app.status === 'Обучение завершено' && !review) {
-                        html += `<button class="btn btn-small" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
+                        html += `<button class="dashboard-132-btn dashboard-132-btn-small" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
                     }
                     html += `</td></tr>`;
                 }
@@ -130,22 +130,22 @@
                 container.innerHTML = html;
             } catch (err) {
                 console.error('Ошибка:', err);
-                container.innerHTML = `<div class="text-center" style="color: red; padding: 40px;">❌ Ошибка: ${err.message}</div>`;
+                container.innerHTML = `<div class="dashboard-141-text-center" style="color: red; padding: 40px;">❌ Ошибка: ${err.message}</div>`;
             }
         }
         
         window.openReviewModal = (appId) => {
             currentAppId = appId;
-            document.getElementById('reviewModal').style.display = 'flex';
+            document.getElementById('dashboard-43-reviewModal').style.display = 'flex';
         };
         
-        document.getElementById('submitReviewBtn').onclick = async () => {
-            const text = document.getElementById('reviewText').value.trim();
+        document.getElementById('dashboard-48-submitReviewBtn').onclick = async () => {
+            const text = document.getElementById('dashboard-46-reviewText').value.trim();
             if (!text) { alert('Введите отзыв'); return; }
             try {
                 await createReview({ user: currentUser.id, application: currentAppId, review_text: text });
-                document.getElementById('reviewModal').style.display = 'none';
-                document.getElementById('reviewText').value = '';
+                document.getElementById('dashboard-43-reviewModal').style.display = 'none';
+                document.getElementById('dashboard-46-reviewText').value = '';
                 loadApplications();
                 showNotification('✅ Спасибо за отзыв!', true);
             } catch(err) {
@@ -153,8 +153,8 @@
             }
         };
         
-        document.getElementById('closeReviewBtn').onclick = () => {
-            document.getElementById('reviewModal').style.display = 'none';
+        document.getElementById('dashboard-49-closeReviewBtn').onclick = () => {
+            document.getElementById('dashboard-43-reviewModal').style.display = 'none';
         };
         
         // Автообновление каждые 10 секунд

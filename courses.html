@@ -7,42 +7,42 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть</a></div>
-            <div class="burger"><span></span><span></span><span></span></div>
-            <nav class="nav-menu"></nav>
+    <header class="courses-12-header">
+        <div class="courses-13-header-container">
+            <div class="courses-14-logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="courses-15-burger"><span></span><span></span><span></span></div>
+            <nav class="courses-16-nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
-        <div class="card">
+    <div class="courses-20-container">
+        <div class="courses-21-card">
             <h2>Все программы обучения</h2>
             <p style="color: #64748b;">Выберите курс и начните обучение уже сегодня</p>
             
             <!-- Фильтры -->
             <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
-                <input type="text" id="searchInput" placeholder="🔍 Поиск по названию..." style="flex: 1; max-width: 300px;">
-                <select id="levelFilter" style="width: auto;">
+                <input type="text" id="courses-28-searchInput" placeholder="🔍 Поиск по названию..." style="flex: 1; max-width: 300px;">
+                <select id="courses-29-levelFilter" style="width: auto;">
                     <option value="all">Все уровни</option>
                     <option value="Начальный">Начальный</option>
                     <option value="Средний">Средний</option>
                     <option value="Продвинутый">Продвинутый</option>
                 </select>
-                <button id="resetFilterBtn" class="btn btn-secondary">Сбросить</button>
+                <button id="courses-35-resetFilterBtn" class="courses-35-btn courses-35-btn-secondary">Сбросить</button>
             </div>
         </div>
         
-        <div class="course-grid-catalog" id="coursesList">Загрузка курсов...</div>
+        <div class="courses-39-course-grid-catalog" id="courses-39-coursesList">Загрузка курсов...</div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="courses-42-footer">
+        <div class="courses-43-footer-container">
+            <div class="courses-44-footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="courses-45-footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="courses-46-footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="courses-48-footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -55,9 +55,9 @@
         }
         
         function renderCourses() {
-            const container = document.getElementById('coursesList');
-            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
-            const levelFilter = document.getElementById('levelFilter')?.value || 'all';
+            const container = document.getElementById('courses-39-coursesList');
+            const searchTerm = document.getElementById('courses-28-searchInput')?.value.toLowerCase() || '';
+            const levelFilter = document.getElementById('courses-29-levelFilter')?.value || 'all';
             
             let filtered = allCourses;
             
@@ -69,25 +69,25 @@
             }
             
             if (!filtered.length) {
-                container.innerHTML = '<div class="text-center">Курсы не найдены. Попробуйте изменить фильтры.</div>';
+                container.innerHTML = '<div class="courses-78-text-center">Курсы не найдены. Попробуйте изменить фильтры.</div>';
                 return;
             }
             
             container.innerHTML = filtered.map(c => `
-                <div class="course-card-catalog">
-                    <div class="course-header">
+                <div class="courses-84-course-card-catalog">
+                    <div class="courses-85-course-header">
                         <h3>${escapeHtml(c.name)}</h3>
                         <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">${c.level}</span>
                     </div>
-                    <div class="course-body">
+                    <div class="courses-89-course-body">
                         <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
                             <span style="background: #e2e8f0; padding: 4px 12px; border-radius: 20px;">⏱ ${c.hours} часов</span>
                             <span style="background: #e2e8f0; padding: 4px 12px; border-radius: 20px;">💰 ${c.price.toLocaleString()} ₽</span>
                         </div>
                         <p style="color: #475569;">Программа курса "${c.name}" разработана опытными специалистами. После успешного завершения вы получите удостоверение государственного образца.</p>
                     </div>
-                    <div class="course-footer">
-                        <button class="btn btn-primary" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Оставить заявку</button>
+                    <div class="courses-96-course-footer">
+                        <button class="courses-97-btn courses-97-btn-primary" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Оставить заявку</button>
                     </div>
                 </div>
             `).join('');
@@ -105,11 +105,11 @@
         }
         
         // События фильтров
-        document.getElementById('searchInput')?.addEventListener('input', renderCourses);
-        document.getElementById('levelFilter')?.addEventListener('change', renderCourses);
-        document.getElementById('resetFilterBtn')?.addEventListener('click', () => {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('levelFilter').value = 'all';
+        document.getElementById('courses-28-searchInput')?.addEventListener('input', renderCourses);
+        document.getElementById('courses-29-levelFilter')?.addEventListener('change', renderCourses);
+        document.getElementById('courses-35-resetFilterBtn')?.addEventListener('click', () => {
+            document.getElementById('courses-28-searchInput').value = '';
+            document.getElementById('courses-29-levelFilter').value = 'all';
             renderCourses();
         });
         

@@ -7,60 +7,60 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo"><a href="index.html">Корочки.есть (Админ)</a></div>
-            <div class="burger"><span></span><span></span><span></span></div>
-            <nav class="nav-menu"></nav>
+    <header class="admin-12-header">
+        <div class="admin-13-header-container">
+            <div class="admin-14-logo"><a href="index.html">Корочки.есть (Админ)</a></div>
+            <div class="admin-15-burger"><span></span><span></span><span></span></div>
+            <nav class="admin-16-nav-menu"></nav>
         </div>
     </header>
     
-    <div class="container">
+    <div class="admin-20-container">
         <!-- Статистика -->
-        <div class="admin-stats">
-            <div class="stat-card"><div class="stat-number" id="statsCourses">0</div><div class="stat-label">Курсов</div></div>
-            <div class="stat-card"><div class="stat-number" id="statsApplications">0</div><div class="stat-label">Заявок</div></div>
-            <div class="stat-card"><div class="stat-number" id="statsUsers">0</div><div class="stat-label">Пользователей</div></div>
-            <div class="stat-card"><div class="stat-number" id="statsReviews">0</div><div class="stat-label">Отзывов</div></div>
+        <div class="admin-22-admin-stats">
+            <div class="admin-23-stat-card"><div class="admin-23-stat-number" id="admin-23-statsCourses">0</div><div class="admin-23-stat-label">Курсов</div></div>
+            <div class="admin-24-stat-card"><div class="admin-24-stat-number" id="admin-24-statsApplications">0</div><div class="admin-24-stat-label">Заявок</div></div>
+            <div class="admin-25-stat-card"><div class="admin-25-stat-number" id="admin-25-statsUsers">0</div><div class="admin-25-stat-label">Пользователей</div></div>
+            <div class="admin-26-stat-card"><div class="admin-26-stat-number" id="admin-26-statsReviews">0</div><div class="admin-26-stat-label">Отзывов</div></div>
         </div>
         
-        <div class="card">
+        <div class="admin-29-card">
             <h2>Управление курсами</h2>
-            <button class="btn btn-primary" id="showAddCourseBtn">+ Добавить курс</button>
-            <div id="coursesList">Загрузка...</div>
+            <button class="admin-31-btn admin-31-btn-primary" id="admin-31-showAddCourseBtn">+ Добавить курс</button>
+            <div id="admin-32-coursesList">Загрузка...</div>
         </div>
         
-        <div class="card">
+        <div class="admin-35-card">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
                 <h2 style="margin: 0;">Все заявки пользователей</h2>
-                <button class="btn btn-secondary" id="exportCsvBtn">Экспорт в CSV</button>
+                <button class="admin-38-btn admin-38-btn-secondary" id="admin-38-exportCsvBtn">Экспорт в CSV</button>
             </div>
-            <div id="applicationsList">Загрузка...</div>
-            <div id="pagination" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;"></div>
+            <div id="admin-40-applicationsList">Загрузка...</div>
+            <div id="admin-41-pagination" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;"></div>
         </div>
     </div>
     
     <!-- Модалка добавления курса -->
-    <div id="addCourseModal" class="modal">
-        <div class="modal-content">
+    <div id="admin-46-addCourseModal" class="admin-46-modal">
+        <div class="admin-47-modal-content">
             <h3>Добавить курс</h3>
-            <form id="addCourseForm">
-                <div class="form-group"><label>Название</label><input type="text" id="courseName" required></div>
-                <div class="form-group"><label>Часов</label><input type="number" id="courseHours" required></div>
-                <div class="form-group"><label>Цена (₽)</label><input type="number" id="coursePrice" required></div>
-                <div class="form-group"><label>Уровень</label><select id="courseLevel"><option>Начальный</option><option>Средний</option><option>Продвинутый</option></select></div>
-                <div class="modal-buttons"><button type="submit" class="btn btn-primary">Добавить</button><button type="button" id="closeCourseModal" class="btn btn-secondary">Отмена</button></div>
+            <form id="admin-49-addCourseForm">
+                <div class="admin-50-form-group"><label>Название</label><input type="text" id="admin-50-courseName" required></div>
+                <div class="admin-51-form-group"><label>Часов</label><input type="number" id="admin-51-courseHours" required></div>
+                <div class="admin-52-form-group"><label>Цена (₽)</label><input type="number" id="admin-52-coursePrice" required></div>
+                <div class="admin-53-form-group"><label>Уровень</label><select id="admin-53-courseLevel"><option>Начальный</option><option>Средний</option><option>Продвинутый</option></select></div>
+                <div class="admin-54-modal-buttons"><button type="submit" class="admin-54-btn admin-54-btn-primary">Добавить</button><button type="button" id="admin-54-closeCourseModal" class="admin-54-btn admin-54-btn-secondary">Отмена</button></div>
             </form>
         </div>
     </div>
     
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
-            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
-            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+    <footer class="admin-59-footer">
+        <div class="admin-60-footer-container">
+            <div class="admin-61-footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="admin-62-footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="admin-63-footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+        <div class="admin-65-footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
     </footer>
     
     <script src="js/common.js"></script>
@@ -75,24 +75,24 @@
         async function loadCourses() {
             try {
                 allCourses = await getCourses();
-                const container = document.getElementById('coursesList');
+                const container = document.getElementById('admin-32-coursesList');
                 if (!allCourses.length) { 
                     container.innerHTML = '<p>Нет курсов. Добавьте первый курс.</p>'; 
                     return; 
                 }
-                let html = '<div class="table-responsive"><table style="width:100%"><thead><tr><th>Название</th><th>Часов</th><th>Цена</th><th>Уровень</th><th></th></tr></thead><tbody>';
+                let html = '<div class="admin-84-table-responsive"><table style="width:100%"><thead><tr><th>Название</th><th>Часов</th><th>Цена</th><th>Уровень</th><th></th></tr></thead><tbody>';
                 for (let c of allCourses) {
                     html += `<tr>
                         <td><strong>${escapeHtml(c.name)}</strong></td>
                         <td>${c.hours}</td>
                         <td>${c.price.toLocaleString()} ₽</td>
                         <td>${c.level}</td>
-                        <td><button class="btn btn-small btn-danger" onclick="deleteCourseById('${c.id}')">Удалить</button></td>
+                        <td><button class="admin-91-btn admin-91-btn-small admin-91-btn-danger" onclick="deleteCourseById('${c.id}')">Удалить</button></td>
                     </tr>`;
                 }
                 html += '</tbody>}</div>';
                 container.innerHTML = html;
-                document.getElementById('statsCourses').textContent = allCourses.length;
+                document.getElementById('admin-23-statsCourses').textContent = allCourses.length;
             } catch(e) { 
                 console.error(e); 
             }
@@ -101,19 +101,19 @@
         async function loadApplications() {
             try {
                 allApplications = await getAllApplications();
-                document.getElementById('statsApplications').textContent = allApplications.length;
+                document.getElementById('admin-24-statsApplications').textContent = allApplications.length;
                 renderApplicationsPage();
                 
                 // Загружаем отзывы для статистики
                 const reviews = await getAllReviews();
-                document.getElementById('statsReviews').textContent = reviews.length;
+                document.getElementById('admin-26-statsReviews').textContent = reviews.length;
             } catch(e) { 
                 console.error(e); 
             }
         }
         
         function renderApplicationsPage() {
-            const container = document.getElementById('applicationsList');
+            const container = document.getElementById('admin-40-applicationsList');
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const pageApps = allApplications.slice(start, end);
@@ -123,7 +123,7 @@
                 return; 
             }
             
-            let html = '<div class="table-responsive"><table style="width:100%"><thead><tr><th>Пользователь</th><th>Курс</th><th>Дата</th><th>Оплата</th><th>Статус</th><th></th></tr></thead><tbody>';
+            let html = '<div class="admin-126-table-responsive"><table style="width:100%"><thead><tr><th>Пользователь</th><th>Курс</th><th>Дата</th><th>Оплата</th><th>Статус</th><th></th></tr></thead><tbody>';
             for (let app of pageApps) {
                 const userName = app.user_name || app.user;
                 html += `<tr>
@@ -132,13 +132,13 @@
                     <td>${app.desired_start_date}</td>
                     <td>${app.payment_method}</td>
                     <td>
-                        <select id="status_${app.id}">
+                        <select id="admin-135-status_${app.id}">
                             <option ${app.status === 'Новая' ? 'selected' : ''}>Новая</option>
                             <option ${app.status === 'Идет обучение' ? 'selected' : ''}>Идет обучение</option>
                             <option ${app.status === 'Обучение завершено' ? 'selected' : ''}>Обучение завершено</option>
                         </select>
                     </td>
-                    <td><button class="btn btn-small" onclick="updateStatus('${app.id}')">Сохранить</button></td>
+                    <td><button class="admin-141-btn admin-141-btn-small" onclick="updateStatus('${app.id}')">Сохранить</button></td>
                 </tr>`;
             }
             html += '</tbody>}</div>';
@@ -146,14 +146,14 @@
             
             // Пагинация
             const totalPages = Math.ceil(allApplications.length / itemsPerPage);
-            const paginationDiv = document.getElementById('pagination');
+            const paginationDiv = document.getElementById('admin-41-pagination');
             if (totalPages <= 1) {
                 paginationDiv.innerHTML = '';
                 return;
             }
             let paginationHtml = '';
             for (let i = 1; i <= totalPages; i++) {
-                paginationHtml += `<button class="btn btn-small ${i === currentPage ? 'btn-primary' : 'btn-secondary'}" onclick="goToPage(${i})">${i}</button>`;
+                paginationHtml += `<button class="admin-157-btn admin-157-btn-small ${i === currentPage ? 'admin-157-btn-primary' : 'admin-157-btn-secondary'}" onclick="goToPage(${i})">${i}</button>`;
             }
             paginationDiv.innerHTML = paginationHtml;
         }
@@ -164,7 +164,7 @@
         };
         
         window.updateStatus = async (id) => {
-            const select = document.getElementById(`status_${id}`);
+            const select = document.getElementById(`admin-135-status_${id}`);
             if (!select) return;
             await updateApplicationStatus(id, select.value);
             alert('Статус обновлён');
@@ -179,7 +179,7 @@
         };
         
         // Экспорт в CSV
-        document.getElementById('exportCsvBtn').onclick = () => {
+        document.getElementById('admin-38-exportCsvBtn').onclick = () => {
             if (!allApplications.length) {
                 alert('Нет заявок для экспорта');
                 return;
@@ -208,26 +208,26 @@
         async function loadUsers() {
             try {
                 const users = await getAllUsers();
-                document.getElementById('statsUsers').textContent = users.length;
+                document.getElementById('admin-25-statsUsers').textContent = users.length;
             } catch(e) { console.error(e); }
         }
         
         // Модалки
-        document.getElementById('showAddCourseBtn').onclick = () => document.getElementById('addCourseModal').style.display = 'flex';
-        document.getElementById('closeCourseModal').onclick = () => document.getElementById('addCourseModal').style.display = 'none';
+        document.getElementById('admin-31-showAddCourseBtn').onclick = () => document.getElementById('admin-46-addCourseModal').style.display = 'flex';
+        document.getElementById('admin-54-closeCourseModal').onclick = () => document.getElementById('admin-46-addCourseModal').style.display = 'none';
         
-        document.getElementById('addCourseForm').onsubmit = async (e) => {
+        document.getElementById('admin-49-addCourseForm').onsubmit = async (e) => {
             e.preventDefault();
             await createCourse({ 
-                name: document.getElementById('courseName').value, 
-                hours: parseInt(document.getElementById('courseHours').value), 
-                price: parseInt(document.getElementById('coursePrice').value), 
-                level: document.getElementById('courseLevel').value 
+                name: document.getElementById('admin-50-courseName').value, 
+                hours: parseInt(document.getElementById('admin-51-courseHours').value), 
+                price: parseInt(document.getElementById('admin-52-coursePrice').value), 
+                level: document.getElementById('admin-53-courseLevel').value 
             });
-            document.getElementById('addCourseModal').style.display = 'none';
-            document.getElementById('courseName').value = '';
-            document.getElementById('courseHours').value = '';
-            document.getElementById('coursePrice').value = '';
+            document.getElementById('admin-46-addCourseModal').style.display = 'none';
+            document.getElementById('admin-50-courseName').value = '';
+            document.getElementById('admin-51-courseHours').value = '';
+            document.getElementById('admin-52-coursePrice').value = '';
             loadCourses();
             alert('Курс добавлен');
         };
