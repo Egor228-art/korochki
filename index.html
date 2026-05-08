@@ -1,0 +1,151 @@
+<!-- Установить Live Server -->
+<!-- Старт бд cd C:\Users\ИМЯ_ПОЛЬЗОВАТЕЛЯ\Desktop\korochki_pb\pocketbase затем .\pocketbase.exe serve-->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корочки.есть - портал ДПО</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
+        </div>
+    </header>
+    
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Корочки.есть</h1>
+            <p>Дополнительное профессиональное образование</p>
+            <p style="font-size: 1rem; opacity: 0.85;">Повышайте квалификацию, получайте удостоверения, развивайте карьеру</p>
+            <div class="hero-buttons">
+                <a href="courses.html" class="btn btn-primary">Каталог курсов</a>
+                <a href="register.html" class="btn btn-secondary">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="section">
+            <h2>Популярные курсы</h2>
+            <div class="course-grid-home" id="popularCourses">Загрузка...</div>
+        </div>
+        
+        <div class="section">
+            <h2>Как записаться на обучение</h2>
+            <div class="steps-grid">
+                <div class="step-card"><div class="step-number">1</div><h3>Выберите курс</h3><p>Изучите каталог и выберите подходящую программу</p></div>
+                <div class="step-card"><div class="step-number">2</div><h3>Оставьте заявку</h3><p>Заполните форму и укажите удобную дату старта</p></div>
+                <div class="step-card"><div class="step-number">3</div><h3>Начните обучение</h3><p>После подтверждения заявки получите доступ к материалам</p></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Реальные отзывы выпускников</h2>
+            <div class="reviews-grid" id="reviewsList">Загрузка отзывов...</div>
+        </div>
+        
+        <div class="section stats">
+            <div class="stats-grid">
+                <div class="stat"><span class="stat-number">5000+</span><div>Выпускников</div></div>
+                <div class="stat"><span class="stat-number">50+</span><div>Программ</div></div>
+                <div class="stat"><span class="stat-number">98%</span><div>Довольны обучением</div></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+    </footer>
+    
+    <script src="js/common.js"></script>
+    <script>
+        async function loadPopularCourses() {
+            const container = document.getElementById('popularCourses');
+            const courses = await getCourses();
+            
+            if (!courses.length) {
+                container.innerHTML = '<div class="text-center">Курсы временно недоступны</div>';
+                return;
+            }
+            
+            const popular = courses.slice(0, 6);
+            container.innerHTML = popular.map(c => `
+                <div class="course-card-home">
+                    <h3>${escapeHtml(c.name)}</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">${c.hours} часов обучения</p>
+                    <div class="course-price">${c.price.toLocaleString()} ₽</div>
+                    <span class="course-badge">${c.level}</span>
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-primary btn-small" onclick="applyForCourse('${escapeHtml(c.name)}')">📝 Записаться</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        async function loadRealReviews() {
+            const container = document.getElementById('reviewsList');
+            try {
+                const allReviews = await getAllReviews();
+                console.log('Загружено отзывов:', allReviews.length);
+                
+                if (!allReviews.length) {
+                    // Показываем демо-отзывы, если реальных нет
+                    container.innerHTML = `
+                        <div class="review-card"><div class="review-author"><div class="review-avatar">А</div><div><div class="review-name">Анна Смирнова</div><div class="review-course">Управление проектами</div></div></div><div class="review-text">"Отличный курс! Преподаватели - практики, много живых примеров. После обучения получила повышение на работе."</div></div>
+                        <div class="review-card"><div class="review-author"><div class="review-avatar">Д</div><div><div class="review-name">Дмитрий Волков</div><div class="review-course">Аналитика данных</div></div></div><div class="review-text">"Материал структурирован, домашние задания проверяют быстро. Рекомендую!"</div></div>
+                    `;
+                    return;
+                }
+                
+                // Берём случайные 4 отзыва (или меньше, если их мало)
+                const shuffled = [...allReviews];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                const randomReviews = shuffled.slice(0, 4);
+                
+                container.innerHTML = randomReviews.map(r => `
+                    <div class="review-card">
+                        <div class="review-author">
+                            <div class="review-avatar">${escapeHtml(r.user_name?.charAt(0) || '?')}</div>
+                            <div>
+                                <div class="review-name">${escapeHtml(r.user_name || 'Выпускник')}</div>
+                                <div class="review-course">${escapeHtml(r.course_name || 'Курс ДПО')}</div>
+                            </div>
+                        </div>
+                        <div class="review-text">"${escapeHtml(r.review_text)}"</div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                console.error('Ошибка загрузки отзывов:', e);
+                container.innerHTML = '<div class="text-center">Отзывы временно недоступны</div>';
+            }
+        }
+        
+        function applyForCourse(courseName) {
+            if (!currentUser) {
+                if (confirm('Для подачи заявки нужно войти. Перейти на страницу входа?')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            localStorage.setItem('selectedCourse', courseName);
+            window.location.href = 'application_form.html';
+        }
+        
+        loadPopularCourses();
+        loadRealReviews();
+    </script>
+</body>
+</html>

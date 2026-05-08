@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/api/register", "destination": "/api/register" },
+    { "source": "/api/login", "destination": "/api/login" },
+    { "source": "/api/init", "destination": "/api/init" },
+    { "source": "/api/courses/:id*", "destination": "/api/courses" },
+    { "source": "/api/applications/:id*", "destination": "/api/applications" },
+    { "source": "/api/reviews", "destination": "/api/reviews" },
+    { "source": "/api/users/:id*", "destination": "/api/users" }
+  ]
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Корочки.есть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card" style="max-width: 600px; margin: 30px auto;">
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <div class="form-group"><label>Email</label><input type="email" id="email" required></div>
+                <div class="form-group"><label>Пароль</label><input type="password" id="password" required><div class="error" id="passwordError"></div></div>
+                <div class="form-group"><label>ФИО</label><input type="text" id="full_name" required><div class="error" id="nameError"></div></div>
+                <div class="form-group"><label>Телефон</label><input type="text" id="phone" placeholder="8(999)123-45-67" required><div class="error" id="phoneError"></div></div>
+                <button type="submit" class="btn">Зарегистрироваться</button>
+            </form>
+            <p class="mt-20">Уже есть аккаунт? <a href="login.html">Войти</a></p>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+    </footer>
+    
+    <script src="js/common.js"></script>
+    <script>
+        document.getElementById('phone')?.addEventListener('input', (e) => phoneMask(e.target));
+        
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const full_name = document.getElementById('full_name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            
+            if (password.length < 8) {
+                document.getElementById('passwordError').textContent = 'Пароль не менее 8 символов';
+                return;
+            }
+            if (!/^[а-яА-ЯёЁ\s\-]+$/.test(full_name)) {
+                document.getElementById('nameError').textContent = 'ФИО: только кириллица';
+                return;
+            }
+            if (!/^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(phone)) {
+                document.getElementById('phoneError').textContent = 'Формат: 8(XXX)XXX-XX-XX';
+                return;
+            }
+            
+            try {
+                await pbRegister({ email, password, passwordConfirm: password, full_name, phone, is_admin: false });
+                await pbLogin(email, password);
+                window.location.href = 'dashboard.html';
+            } catch(err) {
+                alert('Ошибка: ' + err.message);
+            }
+        });
+    </script>
+</body>
+</html>

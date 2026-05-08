@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои заявки - Корочки.есть</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c7da0;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Мои заявки на обучение</h2>
+            <div id="applicationsList">Загрузка...</div>
+        </div>
+    </div>
+    
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <h3>Оставить отзыв</h3>
+            <textarea id="reviewText" rows="4" style="width:100%" placeholder="Поделитесь впечатлениями..."></textarea>
+            <div class="modal-buttons">
+                <button id="submitReviewBtn" class="btn btn-primary">Отправить</button>
+                <button id="closeReviewBtn" class="btn btn-secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+    </footer>
+    
+    <script src="js/common.js"></script>
+    <script>
+        if (!requireAuth()) throw new Error('Не авторизован');
+        
+        let currentAppId = null;
+        let previousStatuses = {};
+        
+        function showNotification(message, isSuccess = true) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.background = isSuccess ? '#2c7da0' : '#e53e3e';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 4000);
+        }
+        
+        async function loadApplications() {
+            const container = document.getElementById('applicationsList');
+            container.innerHTML = '<div class="text-center">Загрузка заявок...</div>';
+            
+            try {
+                const apps = await getUserApplications(currentUser.id);
+                
+                if (!apps.length) {
+                    container.innerHTML = `
+                        <div class="text-center" style="padding: 40px;">
+                            <p>📭 У вас пока нет заявок</p>
+                            <a href="courses.html" class="btn btn-primary" style="margin-top: 16px;">Перейти к курсам</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '<div class="table-responsive"><table style="width:100%; border-collapse: collapse;"><thead><tr style="background: #0f2b3d; color: white;"><th style="padding: 12px;">Курс</th><th style="padding: 12px;">Дата</th><th style="padding: 12px;">Оплата</th><th style="padding: 12px;">Статус</th><th style="padding: 12px;">Отзыв</th><th style="padding: 12px;"></th></tr></thead><tbody>';
+                
+                for (let app of apps) {
+                    // Проверяем изменение статуса
+                    if (previousStatuses[app.id] && previousStatuses[app.id] !== app.status) {
+                        showNotification(`Статус заявки "${app.course_name}" изменён на: ${app.status}`, true);
+                    }
+                    previousStatuses[app.id] = app.status;
+                    
+                    let review = null;
+                    try {
+                        review = await getReviewByApplication(app.id);
+                    } catch(e) {}
+                    
+                    let statusClass = '';
+                    if (app.status === 'Новая') statusClass = 'status-new';
+                    else if (app.status === 'Идет обучение') statusClass = 'status-progress';
+                    else if (app.status === 'Обучение завершено') statusClass = 'status-completed';
+                    
+                    html += `<tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 12px;"><strong>${escapeHtml(app.course_name)}</strong></td>
+                        <td style="padding: 12px;">${app.desired_start_date}</td>
+                        <td style="padding: 12px;">${app.payment_method}</td>
+                        <td style="padding: 12px;"><span class="status-badge ${statusClass}">${app.status}</span></td>
+                        <td style="padding: 12px;">${review ? escapeHtml(review.review_text) : '—'}</td>
+                        <td style="padding: 12px;">`;
+                    
+                    if (app.status === 'Обучение завершено' && !review) {
+                        html += `<button class="btn btn-small" onclick="openReviewModal('${app.id}')">✍️ Отзыв</button>`;
+                    }
+                    html += `</td></tr>`;
+                }
+                
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+            } catch (err) {
+                console.error('Ошибка:', err);
+                container.innerHTML = `<div class="text-center" style="color: red; padding: 40px;">❌ Ошибка: ${err.message}</div>`;
+            }
+        }
+        
+        window.openReviewModal = (appId) => {
+            currentAppId = appId;
+            document.getElementById('reviewModal').style.display = 'flex';
+        };
+        
+        document.getElementById('submitReviewBtn').onclick = async () => {
+            const text = document.getElementById('reviewText').value.trim();
+            if (!text) { alert('Введите отзыв'); return; }
+            try {
+                await createReview({ user: currentUser.id, application: currentAppId, review_text: text });
+                document.getElementById('reviewModal').style.display = 'none';
+                document.getElementById('reviewText').value = '';
+                loadApplications();
+                showNotification('✅ Спасибо за отзыв!', true);
+            } catch(err) {
+                alert('❌ Ошибка: ' + err.message);
+            }
+        };
+        
+        document.getElementById('closeReviewBtn').onclick = () => {
+            document.getElementById('reviewModal').style.display = 'none';
+        };
+        
+        // Автообновление каждые 10 секунд
+        loadApplications();
+        setInterval(loadApplications, 10000);
+    </script>
+</body>
+</html>

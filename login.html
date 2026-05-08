@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Корочки.есть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Корочки.есть</a></div>
+            <div class="burger"><span></span><span></span><span></span></div>
+            <nav class="nav-menu"></nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card" style="max-width: 500px; margin: 50px auto;">
+            <h2>Вход в систему</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="password" required>
+                    <div class="error" id="loginError"></div>
+                </div>
+                <button type="submit" class="btn">Войти</button>
+            </form>
+            <p class="mt-20">Нет аккаунта? <a href="register.html">Регистрация</a></p>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col"><h4>Корочки.есть</h4><p>Дополнительное профессиональное образование</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>8(800)123-45-67</p><p>info@korochki.est</p></div>
+            <div class="footer-col"><h4>Юридическая информация</h4><p>Лицензия №1234</p><p>ОГРН 1234567890123</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Корочки.есть. Все права защищены.</p></div>
+    </footer>
+    
+    <script src="js/common.js"></script>
+    <script>
+        // Очищаем старые данные при загрузке страницы входа
+        localStorage.removeItem('pb_user');
+        localStorage.removeItem('pb_token');
+        currentUser = null;
+        
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            try {
+                console.log('Попытка входа:', email);
+                await pbLogin(email, password);
+                console.log('Вход успешен, редирект на dashboard');
+                window.location.href = 'dashboard.html';
+            } catch(err) {
+                console.error('Ошибка входа:', err);
+                errorDiv.textContent = err.message;
+            }
+        });
+    </script>
+</body>
+</html>
