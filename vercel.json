@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "routes": [
-    {
-      "src": "/data/(.*)",
-      "headers": { "Cache-Control": "public, max-age=86400" }
-    },
-    {
-      "src": "/js/(.*)",
-      "headers": { "Cache-Control": "public, max-age=86400" }
-    },
-    { "handle": "filesystem" }
+  "buildCommand": "echo 'Static files only'",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/components/:file", "destination": "/components/:file" },
+    { "source": "/data/:file", "destination": "/data/:file" },
+    { "source": "/js/:file", "destination": "/js/:file" }
   ]
 }
