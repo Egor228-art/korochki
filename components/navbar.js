@@ -198,7 +198,7 @@ class CustomNavbar extends HTMLElement {
                     ${isLoggedIn ? 
                         `<div class="user-menu">
                             ${isAdmin ? 
-                                `<a href="http://127.0.0.1:8090/_/" target="_blank" class="admin-link">
+                                `<a href="/admin.html" target="_blank" class="admin-link">
                                     Админка
                                 </a>` : 
                                 `<a href="applications.html" class="profile-link">
