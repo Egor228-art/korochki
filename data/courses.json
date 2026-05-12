@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "Веб-разработка",
+        "description": "Освойте современные веб-технологии: HTML, CSS, JavaScript и фреймворки.",
+        "price": 15000,
+        "duration": "8 недель",
+        "category": "Программирование",
+        "image": "💻"
+    },
+    {
+        "id": 2,
+        "name": "Анализ данных",
+        "description": "Научитесь анализировать данные с помощью Python и SQL.",
+        "price": 18000,
+        "duration": "6 недель",
+        "category": "Аналитика",
+        "image": "📊"
+    },
+    {
+        "id": 3,
+        "name": "Цифровой маркетинг",
+        "description": "Освойте инструменты цифрового маркетинга.",
+        "price": 12000,
+        "duration": "4 недели",
+        "category": "Маркетинг",
+        "image": "🎯"
+    },
+    {
+        "id": 4,
+        "name": "Мобильная разработка",
+        "description": "Создавайте приложения для iOS и Android.",
+        "price": 20000,
+        "duration": "10 недель",
+        "category": "Программирование",
+        "image": "📱"
+    },
+    {
+        "id": 5,
+        "name": "Графический дизайн",
+        "description": "Освойте Photoshop, Illustrator и Figma.",
+        "price": 14000,
+        "duration": "7 недель",
+        "category": "Дизайн",
+        "image": "🎨"
+    },
+    {
+        "id": 6,
+        "name": "Искусственный интеллект",
+        "description": "Введение в машинное обучение и нейронные сети.",
+        "price": 25000,
+        "duration": "12 недель",
+        "category": "AI/ML",
+        "image": "🤖"
+    }
+]

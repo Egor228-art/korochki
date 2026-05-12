@@ -1,0 +1,8 @@
+{
+  "name": "korochki",
+  "version": "1.0.0",
+  "description": "Корочки.Есть - образовательная платформа",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  }
+}
