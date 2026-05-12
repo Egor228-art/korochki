@@ -43,6 +43,9 @@
                 <button onclick="switchTab('applications')" id="applicationsTab" class="tab-button border-b-2 border-transparent text-gray-500 font-medium py-4 px-1">
                     Заявки (<span id="applicationsCount">0</span>)
                 </button>
+                <button onclick="switchTab('feedbacks')" id="feedbacksTab" class="tab-button border-b-2 border-transparent text-gray-500 font-medium py-4 px-1">
+                    Отзывы (<span id="feedbacksCount">0</span>)
+                </button>
             </nav>
         </div>
 
@@ -100,6 +103,25 @@
                         </tr>
                     </thead>
                     <tbody id="applicationsTableBody" class="bg-white divide-y divide-gray-200">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="feedbacksContent" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Пользователь</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Курс</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Отзыв</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Дата</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Статус</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedbacksTableBody" class="bg-white divide-y divide-gray-200">
                     </tbody>
                 </table>
             </div>
@@ -244,6 +266,7 @@
             if (tab === 'users') loadUsers();
             else if (tab === 'courses') loadCourses();
             else if (tab === 'applications') loadApplications();
+            else if (tab === 'feedbacks') loadFeedbacks();
         }
 
         // ========== ПОЛЬЗОВАТЕЛИ ==========
@@ -471,6 +494,58 @@
                 showMessage(`✅ Статус изменен на "${newStatus}"`);
             }
         }
+
+        // ========== ОТЗЫВЫ ==========
+function loadFeedbacks() {
+    const feedbacks = pb.getFeedbacks();
+    document.getElementById('feedbacksCount').textContent = feedbacks.length;
+    
+    document.getElementById('feedbacksTableBody').innerHTML = feedbacks.map(fb => {
+        return `
+            <tr>
+                <td class="px-6 py-4">
+                    <div class="text-sm font-medium text-gray-900">${fb.user_name}</div>
+                    <div class="text-sm text-gray-500">${fb.user_email}</div>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-900">${fb.course_name}</td>
+                <td class="px-6 py-4">
+                    <div class="text-sm text-gray-900 max-w-xs">${fb.message}</div>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-900">${new Date(fb.created).toLocaleDateString('ru-RU')}</td>
+                <td class="px-6 py-4">
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full ${
+                        fb.status === 'approved' ? 'bg-green-100 text-green-800' :
+                        fb.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                        'bg-yellow-100 text-yellow-800'
+                    }">
+                        ${fb.status === 'approved' ? 'Одобрен' : 
+                          fb.status === 'rejected' ? 'Отклонен' : 'На модерации'}
+                    </span>
+                </td>
+                <td class="px-6 py-4 text-sm space-x-2">
+                    ${fb.status !== 'approved' ? 
+                        `<button onclick="approveFeedback('${fb.id}')" class="text-green-600 hover:text-green-900">✅ Одобрить</button>` : 
+                        ''}
+                    ${fb.status !== 'rejected' ? 
+                        `<button onclick="rejectFeedback('${fb.id}')" class="text-red-600 hover:text-red-900">❌ Отклонить</button>` : 
+                        ''}
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function approveFeedback(feedbackId) {
+    pb.updateFeedbackStatus(feedbackId, 'approved');
+    loadFeedbacks();
+    showMessage('✅ Отзыв одобрен и будет показан на сайте');
+}
+
+function rejectFeedback(feedbackId) {
+    pb.updateFeedbackStatus(feedbackId, 'rejected');
+    loadFeedbacks();
+    showMessage('❌ Отзыв отклонен');
+}
     </script>
 </body>
 </html>

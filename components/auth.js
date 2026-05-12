@@ -170,6 +170,38 @@
         deleteCourse: function(courseId) {
             const courses = JSON.parse(localStorage.getItem('courses')).filter(c => c.id !== courseId);
             localStorage.setItem('courses', JSON.stringify(courses));
+        },
+
+        getFeedbacks: function() {
+            return JSON.parse(localStorage.getItem('feedbacks') || '[]');
+        },
+
+        addFeedback: function(feedbackData) {
+            const feedbacks = this.getFeedbacks();
+            const newFeedback = {
+                id: Date.now().toString(),
+                ...feedbackData,
+                status: 'pending', // pending, approved, rejected
+                created: new Date().toISOString()
+            };
+            feedbacks.push(newFeedback);
+            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+            return newFeedback;
+        },
+
+        updateFeedbackStatus: function(feedbackId, status) {
+            const feedbacks = this.getFeedbacks();
+            const index = feedbacks.findIndex(f => f.id === feedbackId);
+            if (index !== -1) {
+                feedbacks[index].status = status;
+                localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+                return feedbacks[index];
+            }
+            return null;
+        },
+
+        getApprovedFeedbacks: function() {
+            return this.getFeedbacks().filter(f => f.status === 'approved');
         }
     };
     

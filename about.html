@@ -471,6 +471,43 @@
                 feather.replace();
             }
         });
+
+        // Загрузка одобренных отзывов в слайдер
+function loadApprovedFeedbacks() {
+    if (!window.pb) return;
+    
+    const approvedFeedbacks = pb.getApprovedFeedbacks();
+    const swiperWrapper = document.querySelector('.testimonialSwiper .swiper-wrapper');
+    
+    if (approvedFeedbacks.length === 0) return;
+    
+    // Добавляем реальные отзывы
+    const feedbacksHTML = approvedFeedbacks.map(fb => `
+        <div class="swiper-slide">
+            <div class="testimonial-card">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                        ${fb.user_name.charAt(0)}
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">${fb.user_name}</h4>
+                        <div class="flex text-yellow-400 text-sm">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic flex-grow">"${fb.message}"</p>
+                <div class="mt-4 text-sm text-gray-400">Выпускник курса "${fb.course_name}"</div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Добавляем в конец слайдера
+    swiperWrapper.innerHTML += feedbacksHTML;
+}
+
+// Вызываем при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(loadApprovedFeedbacks, 500);
+});
     </script>
 </body>
 </html>
