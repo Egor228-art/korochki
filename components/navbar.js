@@ -59,7 +59,7 @@ class CustomNavbar extends HTMLElement {
     async render() {
         const isLoggedIn = window.pb ? pb.isLoggedIn() : false;
         const currentUser = window.pb ? pb.getCurrentUser() : null;
-        const isAdmin = currentUser && currentUser.role === 'admine';
+        const isAdmin = currentUser && currentUser.role === 'admin';
         
         this.shadow.innerHTML = `
             <style>
