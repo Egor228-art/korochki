@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои курсы - Корочки.Есть</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Данные пользователя -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Мой профиль</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <p class="text-gray-600 text-sm">ФИО:</p>
+                    <p class="font-medium text-lg" id="userFullName">Загрузка...</p>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-gray-600 text-sm">Email:</p>
+                    <p class="font-medium text-lg" id="userEmail">Загрузка...</p>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-gray-600 text-sm">Телефон:</p>
+                    <p class="font-medium text-lg" id="userPhone">Загрузка...</p>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-gray-600 text-sm">Имя пользователя:</p>
+                    <p class="font-medium text-lg" id="userUsername">Загрузка...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мои курсы -->
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Мои курсы</h1>
+            <button id="newApplicationBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200">
+                Добавить курс
+            </button>
+        </div>
+
+        <div id="applicationsList" class="space-y-6">
+            <div class="text-center py-12">
+                <div class="text-6xl mb-4">📚</div>
+                <p class="text-gray-500 text-lg">Загрузка ваших курсов...</p>
+            </div>
+        </div>
+
+        <!-- Модальное окно для отзыва -->
+        <div id="feedbackModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold">Оставить отзыв</h2>
+                        <button onclick="closeFeedbackModal()" class="text-gray-400 hover:text-gray-600">
+                            <i data-feather="x" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    
+                    <form id="feedbackForm" class="space-y-4">
+                        <input type="hidden" id="feedbackCourseName">
+                        <input type="hidden" id="feedbackCourseId">
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg" id="feedbackDisplayCourseName">Название курса</h3>
+                            <p class="text-gray-600 text-sm mt-1">Ваш отзыв будет отправлен администратору</p>
+                        </div>
+
+                        <div>
+                            <label for="feedbackEmail" class="block text-sm font-medium text-gray-700 mb-2">Email получателя *</label>
+                            <input type="email" id="feedbackEmail" name="feedbackEmail" value="admin@example.com" readonly
+                                class="w-full rounded-lg border-gray-300 bg-gray-100 shadow-sm p-3 border cursor-not-allowed">
+                        </div>
+
+                        <div>
+                            <label for="feedbackMessage" class="block text-sm font-medium text-gray-700 mb-2">Ваш отзыв *</label>
+                            <textarea id="feedbackMessage" name="feedbackMessage" required rows="5"
+                                    placeholder="Расскажите о вашем опыте прохождения курса..."
+                                    class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border"></textarea>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i data-feather="info" class="w-5 h-5 text-yellow-600 mt-0.5 mr-2"></i>
+                                <div>
+                                    <p class="text-yellow-800 text-sm font-medium">Внимание</p>
+                                    <p class="text-yellow-700 text-xs mt-1">Отзыв будет отправлен администратору для улучшения качества обучения.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-3 pt-4">
+                            <button type="button" onclick="closeFeedbackModal()" 
+                                    class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium">
+                                Отмена
+                            </button>
+                            <button type="submit" 
+                                    class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
+                                Отправить отзыв
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+    
+    <script src="pocketbase.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        console.log('🚀 Загрузка страницы...');
+        
+        // Сначала инициализируем PocketBase
+        await pb.init();
+        console.log('✅ PocketBase инициализирован');
+        
+        // Потом проверяем авторизацию
+        if (!pb.isLoggedIn()) {
+            alert('Требуется авторизация!');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        console.log('✅ Пользователь авторизован');
+        
+        loadUserData();
+        await loadUserApplications();
+        
+        document.getElementById('newApplicationBtn').addEventListener('click', function() {
+            window.location.href = 'new-application.html';
+        });
+        
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    });
+
+    function loadUserData() {
+        const user = pb.getCurrentUser();
+        if (user) {
+            document.getElementById('userFullName').textContent = user.FIO || 'Не указано';
+            document.getElementById('userEmail').textContent = user.email || 'Не указано';
+            document.getElementById('userPhone').textContent = user.telephone || 'Не указано';
+            document.getElementById('userUsername').textContent = user.name || user.username || 'Не указано';
+        }
+    }
+
+    async function loadUserApplications() {
+        try {
+            console.log('=== НАЧАЛО ОТЛАДКИ ===');
+            
+            // 1. Проверим авторизацию
+            const currentUser = pb.getCurrentUser();
+            console.log('👤 Текущий пользователь:', currentUser);
+            console.log('🔑 ID пользователя:', currentUser?.id);
+            
+            if (!currentUser) {
+                console.error('❌ Пользователь не авторизован');
+                return;
+            }
+
+            // 2. Попробуем получить ВСЕ заявки без фильтров
+            console.log('🔄 Получение всех заявок...');
+            let allApplications = [];
+            try {
+                allApplications = await pb.pb.collection('applications').getFullList();
+                console.log('✅ Все заявки в базе:', allApplications);
+            } catch (error) {
+                console.error('❌ Ошибка получения всех заявок:', error);
+            }
+
+            // 3. Выведем подробную информацию о каждой заявке
+            console.log('📊 ДЕТАЛЬНАЯ ИНФОРМАЦИЯ О ЗАЯВКАХ:');
+            allApplications.forEach((app, index) => {
+                console.log(`--- Заявка ${index} ---`);
+                console.log('ID:', app.id);
+                console.log('Название курса:', app.course_name);
+                console.log('Пользователь в заявке:', app.user);
+                console.log('Тип поля user:', typeof app.user);
+                console.log('ID текущего пользователя:', currentUser.id);
+                console.log('Тип ID текущего пользователя:', typeof currentUser.id);
+                console.log('Совпадают?:', app.user === currentUser.id);
+                console.log('Статус:', app.status);
+                console.log('Цена:', app.course_price);
+                console.log('Дата создания:', app.created);
+                console.log('----------------');
+            });
+
+            // 4. Фильтруем заявки текущего пользователя
+            const userApplications = allApplications.filter(app => {
+                const isMatch = app.user === currentUser.id;
+                console.log(`🔍 Сравнение: "${app.user}" === "${currentUser.id}" = ${isMatch}`);
+                return isMatch;
+            });
+
+            console.log('🎯 ЗАЯВКИ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ:', userApplications);
+            console.log('📈 Количество заявок:', userApplications.length);
+
+            // 5. Отображаем результат
+            displayApplications(userApplications);
+
+            console.log('=== КОНЕЦ ОТЛАДКИ ===');
+
+        } catch (error) {
+            console.error('💥 КРИТИЧЕСКАЯ ОШИБКА:', error);
+            showError('Ошибка загрузки заявок: ' + error.message);
+        }
+    }
+
+    function displayApplications(applications) {
+        const container = document.getElementById('applicationsList');
+        
+        console.log('🎨 Отрисовка заявок:', applications);
+        
+        if (!applications || applications.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="text-6xl mb-4">📭</div>
+                    <p class="text-gray-500 text-lg mb-4">Заявок не найдено</p>
+                    <p class="text-gray-400 text-sm">Количество заявок в базе: ${applications ? applications.length : 0}</p>
+                    <a href="new-application.html" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 mt-4">
+                        Создать заявку
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = applications.map(app => {
+            const isCurrentUser = app.user === pb.getCurrentUser()?.id;
+            
+            return `
+                <div class="bg-white border ${isCurrentUser ? 'border-green-400' : 'border-gray-200'} rounded-xl p-6 shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">${app.course_name || 'Не указано'}</h3>
+                            <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                <span class="bg-gray-100 px-2 py-1 rounded">${app.course_category || 'Не указана'}</span>
+                                <span>${app.course_duration || 'Не указана'}</span>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                            ${app.status || 'Не указан'}
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm border-t pt-4">
+                        <div>
+                            <span class="font-medium text-gray-600">Стоимость:</span>
+                            <p class="text-gray-800">${app.course_price ? app.course_price + ' ₽' : 'Не указана'}</p>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-600">Статус:</span>
+                            <p class="text-gray-800">${app.status || 'Не указан'}</p>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-600">Дата создания:</span>
+                            <p class="text-gray-800">${app.created ? new Date(app.created).toLocaleDateString('ru-RU') : 'Не указана'}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопка отзыва для завершенных курсов -->
+                    ${app.status === 'Обучение завершено' ? `
+                    <div class="mt-4 pt-4 border-t">
+                        <button onclick="openFeedbackModal('${app.course_name}', '${app.id}')" 
+                                class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center">
+                            <i data-feather="message-circle" class="w-4 h-4 mr-2"></i>
+                            Оставить отзыв
+                        </button>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="mt-3 p-2 bg-gray-50 rounded">
+                        <span class="text-xs text-gray-500">ID заявки: ${app.id}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    }
+
+    function showError(message) {
+        document.getElementById('applicationsList').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-6xl mb-4">❌</div>
+                <p class="text-red-500 text-lg">${message}</p>
+            </div>
+        `;
+    }
+
+    async function loadUserApplications() {
+        try {
+            console.log('📥 Загрузка заявок...');
+            const currentUser = pb.getCurrentUser();
+            console.log('👤 Текущий пользователь:', currentUser);
+            
+            const applications = await pb.getUserApplications();
+            console.log('✅ Загружены заявки:', applications);
+            
+            // Расширенная отладочная информация
+            if (applications && applications.length > 0) {
+                applications.forEach((app, index) => {
+                    console.log(`📋 Заявка ${index}:`, {
+                        id: app.id,
+                        course_name: app.course_name,
+                        user: app.user,
+                        user_type: typeof app.user,
+                        current_user: currentUser.id,
+                        current_user_type: typeof currentUser.id,
+                        is_match: app.user === currentUser.id
+                    });
+                });
+            } else {
+                console.log('📭 Заявок не найдено');
+                
+                // Проверим, есть ли вообще заявки в базе
+                try {
+                    const allApps = await pb.pb.collection('applications').getFullList();
+                    console.log('📊 Все заявки в базе:', allApps);
+                    console.log('🔍 Поиск заявок для пользователя:', currentUser.id);
+                    const userApps = allApps.filter(app => app.user === currentUser.id);
+                    console.log('👤 Найдено заявок для пользователя:', userApps.length);
+                } catch (e) {
+                    console.error('❌ Ошибка проверки всех заявок:', e);
+                }
+            }
+            
+            displayApplications(applications);
+            
+        } catch (error) {
+            console.error('❌ Ошибка:', error);
+            showError('Ошибка загрузки заявок: ' + error.message);
+        }
+    }
+
+    // Функции для работы с модальным окном отзыва
+    function openFeedbackModal(courseName, courseId) {
+        document.getElementById('feedbackCourseName').value = courseName;
+        document.getElementById('feedbackCourseId').value = courseId;
+        document.getElementById('feedbackDisplayCourseName').textContent = courseName;
+        
+        document.getElementById('feedbackModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFeedbackModal() {
+        document.getElementById('feedbackModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        document.getElementById('feedbackForm').reset();
+        document.getElementById('feedbackEmail').value = 'admin@example.com';
+    }
+
+    // Обработчик отправки отзыва
+    document.addEventListener('DOMContentLoaded', function() {
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitFeedback();
+            });
+        }
+    });
+
+    function submitFeedback() {
+        const courseName = document.getElementById('feedbackCourseName').value;
+        const courseId = document.getElementById('feedbackCourseId').value;
+        const email = document.getElementById('feedbackEmail').value;
+        const message = document.getElementById('feedbackMessage').value;
+
+        if (!message.trim()) {
+            alert('Пожалуйста, напишите ваш отзыв');
+            return;
+        }
+
+        // Имитация отправки отзыва
+        console.log('📧 Отправка отзыва:', {
+            course: courseName,
+            courseId: courseId,
+            to: email,
+            message: message
+        });
+
+        // Показываем уведомление об успешной отправке
+        alert(`✅ Ваш отзыв на курс "${courseName}" успешно отправлен администратору!`);
+        
+        // Закрываем модальное окно
+        closeFeedbackModal();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наши курсы - Корочки.Есть</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-4">Наши курсы</h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">Выберите подходящий курс и начните обучение уже сегодня</p>
+        </div>
+        
+        <!-- Фильтры -->
+        <div class="flex flex-wrap gap-3 mb-8 justify-center" id="categoryFilters">
+            <button class="category-filter px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition active" data-category="all">
+                Все курсы
+            </button>
+            <!-- Категории будут добавлены динамически -->
+        </div>
+        
+        <!-- Список курсов -->
+        <div id="coursesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="text-center py-12 col-span-3">
+                <div class="text-4xl mb-4">⏳</div>
+                <p class="text-gray-500 text-lg">Загрузка курсов...</p>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+    
+    <script src="pocketbase.js"></script>
+    <script>
+        let allCourses = [];
+        let currentCategory = 'all';
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            await pb.init();
+            await loadCourses();
+            setupEventListeners();
+            
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+        });
+
+        async function loadCourses() {
+            try {
+                allCourses = await pb.getCourses();
+                displayCourses(allCourses);
+                updateCategoryFilters(allCourses);
+            } catch (error) {
+                console.error('Ошибка загрузки курсов:', error);
+                document.getElementById('coursesContainer').innerHTML = `
+                    <div class="col-span-3 text-center py-12">
+                        <div class="text-6xl mb-4">❌</div>
+                        <p class="text-red-500 text-lg mb-2">Ошибка загрузки курсов</p>
+                        <p class="text-gray-500">Попробуйте обновить страницу</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayCourses(courses) {
+            const container = document.getElementById('coursesContainer');
+            
+            if (!courses || courses.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-12">
+                        <div class="text-6xl mb-4">📚</div>
+                        <p class="text-gray-500 text-lg">Курсы временно недоступны</p>
+                        <p class="text-gray-400 mt-2">Скоро добавим новые курсы</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = courses.map(course => {
+                // Выбираем цвет в зависимости от категории
+                const colors = {
+                    'Программирование': { bg: 'blue', text: 'blue' },
+                    'Дизайн': { bg: 'purple', text: 'purple' },
+                    'Маркетинг': { bg: 'green', text: 'green' },
+                    'Бизнес': { bg: 'orange', text: 'orange' }
+                };
+                
+                const categoryColor = colors[course.category] || { bg: 'gray', text: 'gray' };
+                
+                return `
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 course-card" 
+                         data-category="${course.category || 'other'}">
+                        <div class="h-48 bg-${categoryColor.bg}-100 flex items-center justify-center p-4">
+                            ${course.image ? 
+                                `<img src="${course.image}" alt="${course.name}" class="max-h-full max-w-full object-contain rounded-lg">` :
+                                `<div class="text-6xl text-${categoryColor.text}-400">📚</div>`
+                            }
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-xl font-bold text-gray-900 flex-1">${course.name}</h3>
+                                <span class="ml-2 px-3 py-1 bg-${categoryColor.bg}-100 text-${categoryColor.text}-600 text-sm font-medium rounded-full">
+                                    ${course.category || 'Курс'}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 mb-4 leading-relaxed">${course.description || 'Описание курса'}</p>
+                            
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <span class="text-2xl font-bold text-${categoryColor.text}-600">${course.price || 0} ₽</span>
+                                    <span class="text-gray-500 text-sm block mt-1">${course.duration || '1 месяц'}</span>
+                                </div>
+                            </div>
+                            
+                            <a href="new-application.html" 
+                               class="block w-full bg-${categoryColor.bg}-600 hover:bg-${categoryColor.bg}-700 text-white text-center py-3 px-4 rounded-lg font-medium transition duration-200">
+                                Записаться
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateCategoryFilters(courses) {
+            const filtersContainer = document.getElementById('categoryFilters');
+            const categories = [...new Set(courses.map(course => course.category).filter(Boolean))];
+            
+            if (categories.length > 0) {
+                categories.forEach(category => {
+                    const button = document.createElement('button');
+                    button.className = 'category-filter px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition';
+                    button.textContent = category;
+                    button.setAttribute('data-category', category);
+                    button.onclick = () => filterByCategory(category);
+                    filtersContainer.appendChild(button);
+                });
+            }
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Обновляем активную кнопку
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-blue-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            
+            const filteredCourses = category === 'all' 
+                ? allCourses 
+                : allCourses.filter(course => course.category === category);
+            
+            displayCourses(filteredCourses);
+        }
+
+        function setupEventListeners() {
+            // Можно добавить дополнительные обработчики
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Корочки.Есть</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Админ-панель</h1>
+            <div class="space-x-2">
+                <button id="addUserBtn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded">
+                    + Добавить пользователя
+                </button>
+                <button id="addCourseBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+                    + Добавить курс
+                </button>
+            </div>
+        </div>
+
+        <!-- Табы -->
+        <div class="mb-6 border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8">
+                <button id="usersTab" class="tab-button border-b-2 border-blue-500 text-blue-600 font-medium py-4 px-1">
+                    Пользователи
+                </button>
+                <button id="coursesTab" class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium py-4 px-1">
+                    Курсы
+                </button>
+                <button id="applicationsTab" class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium py-4 px-1">
+                    Заявки
+                </button>
+            </nav>
+        </div>
+
+        <!-- Контент табов -->
+        <div id="usersContent" class="tab-content">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ФИО</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Роль</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Телефон</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Дата регистрации</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="coursesContent" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Название</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Длительность</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coursesTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Courses will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="applicationsContent" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Пользователь</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Курс</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Начало курса</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Метод оплаты</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Дата заявки</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Applications will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальные окна -->
+    <!-- Модальное окно добавления/редактирования пользователя -->
+    <div id="userModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 id="userModalTitle" class="text-lg font-medium text-gray-900 mb-4">Добавить пользователя</h3>
+                <form id="userForm" class="space-y-4">
+                    <input type="hidden" id="userId">
+                    <div>
+                        <label for="userFullName" class="block text-sm font-medium text-gray-700">ФИО *</label>
+                        <input type="text" id="userFullName" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="userUsername" class="block text-sm font-medium text-gray-700">Имя пользователя *</label>
+                        <input type="text" id="userUsername" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="userEmail" class="block text-sm font-medium text-gray-700">Email *</label>
+                        <input type="email" id="userEmail" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="userPhone" class="block text-sm font-medium text-gray-700">Телефон *</label>
+                        <input type="tel" id="userPhone" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="userPassword" class="block text-sm font-medium text-gray-700">Пароль *</label>
+                        <input type="password" id="userPassword"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <p class="text-xs text-gray-500 mt-1">Оставьте пустым, если не хотите менять пароль</p>
+                    </div>
+                    <div>
+                        <label for="userRole" class="block text-sm font-medium text-gray-700">Роль *</label>
+                        <select id="userRole" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            <option value="user">Пользователь</option>
+                            <option value="admin">Администратор</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" onclick="closeUserModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Отмена</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления/редактирования курса -->
+    <div id="courseModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 id="courseModalTitle" class="text-lg font-medium text-gray-900 mb-4">Добавить курс</h3>
+                <form id="courseForm" class="space-y-4">
+                    <input type="hidden" id="courseId">
+                    <div>
+                        <label for="courseName" class="block text-sm font-medium text-gray-700">Название курса *</label>
+                        <input type="text" id="courseName" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="courseDescription" class="block text-sm font-medium text-gray-700">Описание *</label>
+                        <textarea id="courseDescription" required
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
+                    </div>
+                    <div>
+                        <label for="courseCategory" class="block text-sm font-medium text-gray-700">Категория *</label>
+                        <input type="text" id="courseCategory" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="coursePrice" class="block text-sm font-medium text-gray-700">Цена (руб) *</label>
+                        <input type="number" id="coursePrice" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="courseDuration" class="block text-sm font-medium text-gray-700">Длительность *</label>
+                        <input type="text" id="courseDuration" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="courseImage" class="block text-sm font-medium text-gray-700">Эмодзи/Иконка</label>
+                        <input type="text" id="courseImage"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" onclick="closeCourseModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Отмена</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <custom-footer></custom-footer>
+
+    <script src="pocketbase.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверка прав администратора
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || currentUser.role !== 'admin') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Инициализация
+            loadUsers();
+            initTabs();
+            initEventListeners();
+        });
+
+        function initTabs() {
+            const tabs = {
+                usersTab: 'usersContent',
+                coursesTab: 'coursesContent',
+                applicationsTab: 'applicationsContent'
+            };
+
+            for (let tabId in tabs) {
+                document.getElementById(tabId).addEventListener('click', function() {
+                    // Сбрасываем активные табы
+                    document.querySelectorAll('.tab-button').forEach(tab => {
+                        tab.classList.remove('border-blue-500', 'text-blue-600');
+                        tab.classList.add('border-transparent', 'text-gray-500');
+                    });
+                    
+                    // Скрываем все контенты
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    // Активируем текущий таб
+                    this.classList.remove('border-transparent', 'text-gray-500');
+                    this.classList.add('border-blue-500', 'text-blue-600');
+                    
+                    // Показываем соответствующий контент
+                    document.getElementById(tabs[tabId]).classList.remove('hidden');
+
+                    // Загружаем данные для таба
+                    if (tabId === 'coursesTab') {
+                        loadCourses();
+                    } else if (tabId === 'applicationsTab') {
+                        loadApplications();
+                    }
+                });
+            }
+        }
+
+        function initEventListeners() {
+            // Кнопки добавления
+            document.getElementById('addUserBtn').addEventListener('click', openUserModal);
+            document.getElementById('addCourseBtn').addEventListener('click', openCourseModal);
+
+            // Формы
+            document.getElementById('userForm').addEventListener('submit', saveUser);
+            document.getElementById('courseForm').addEventListener('submit', saveCourse);
+        }
+
+        // Функции для пользователей
+        function loadUsers() {
+            const users = db.select('users');
+            const tbody = document.getElementById('usersTableBody');
+            
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${user.fullName}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800'
+                        }">
+                            ${user.role === 'admin' ? 'Админ' : 'Пользователь'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.phone}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${new Date(user.createdAt).toLocaleDateString('ru-RU')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="editUser(${user.id})" class="text-blue-600 hover:text-blue-900 mr-3">Редактировать</button>
+                        ${user.id !== 1 ? `<button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-900">Удалить</button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openUserModal() {
+            document.getElementById('userModalTitle').textContent = 'Добавить пользователя';
+            document.getElementById('userForm').reset();
+            document.getElementById('userId').value = '';
+            document.getElementById('userPassword').required = true;
+            document.getElementById('userModal').classList.remove('hidden');
+        }
+
+        function editUser(userId) {
+            const user = db.select('users', { id: userId })[0];
+            if (user) {
+                document.getElementById('userModalTitle').textContent = 'Редактировать пользователя';
+                document.getElementById('userId').value = user.id;
+                document.getElementById('userFullName').value = user.fullName;
+                document.getElementById('userUsername').value = user.username;
+                document.getElementById('userEmail').value = user.email;
+                document.getElementById('userPhone').value = user.phone;
+                document.getElementById('userRole').value = user.role;
+                document.getElementById('userPassword').required = false;
+                document.getElementById('userModal').classList.remove('hidden');
+            }
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').classList.add('hidden');
+        }
+
+        function saveUser(e) {
+            e.preventDefault();
+            
+            const userData = {
+                fullName: document.getElementById('userFullName').value,
+                username: document.getElementById('userUsername').value,
+                email: document.getElementById('userEmail').value,
+                phone: document.getElementById('userPhone').value,
+                role: document.getElementById('userRole').value
+            };
+
+            const userId = document.getElementById('userId').value;
+            const password = document.getElementById('userPassword').value;
+
+            if (password) {
+                userData.password = password;
+            }
+
+            if (userId) {
+                // Редактирование
+                db.update('users', parseInt(userId), userData);
+            } else {
+                // Добавление
+                if (!password) {
+                    alert('Пароль обязателен для нового пользователя!');
+                    return;
+                }
+                db.insert('users', userData);
+            }
+
+            closeUserModal();
+            loadUsers();
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+                db.delete('users', userId);
+                loadUsers();
+            }
+        }
+
+        // Функции для курсов
+        function loadCourses() {
+            const courses = db.select('courses');
+            const tbody = document.getElementById('coursesTableBody');
+            
+            tbody.innerHTML = courses.map(course => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${course.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <div class="flex items-center">
+                            <span class="text-xl mr-2">${course.image || '📚'}</span>
+                            ${course.name}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${course.category}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${course.price} руб.</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${course.duration}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="editCourse(${course.id})" class="text-blue-600 hover:text-blue-900 mr-3">Редактировать</button>
+                        <button onclick="deleteCourse(${course.id})" class="text-red-600 hover:text-red-900">Удалить</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openCourseModal() {
+            document.getElementById('courseModalTitle').textContent = 'Добавить курс';
+            document.getElementById('courseForm').reset();
+            document.getElementById('courseId').value = '';
+            document.getElementById('courseModal').classList.remove('hidden');
+        }
+
+        function editCourse(courseId) {
+            const course = db.select('courses', { id: courseId })[0];
+            if (course) {
+                document.getElementById('courseModalTitle').textContent = 'Редактировать курс';
+                document.getElementById('courseId').value = course.id;
+                document.getElementById('courseName').value = course.name;
+                document.getElementById('courseDescription').value = course.description;
+                document.getElementById('courseCategory').value = course.category;
+                document.getElementById('coursePrice').value = course.price;
+                document.getElementById('courseDuration').value = course.duration;
+                document.getElementById('courseImage').value = course.image || '';
+                document.getElementById('courseModal').classList.remove('hidden');
+            }
+        }
+
+        function closeCourseModal() {
+            document.getElementById('courseModal').classList.add('hidden');
+        }
+
+        function saveCourse(e) {
+            e.preventDefault();
+            
+            const courseData = {
+                name: document.getElementById('courseName').value,
+                description: document.getElementById('courseDescription').value,
+                category: document.getElementById('courseCategory').value,
+                price: parseInt(document.getElementById('coursePrice').value),
+                duration: document.getElementById('courseDuration').value,
+                image: document.getElementById('courseImage').value || '📚'
+            };
+
+            const courseId = document.getElementById('courseId').value;
+
+            if (courseId) {
+                // Редактирование
+                db.update('courses', parseInt(courseId), courseData);
+            } else {
+                // Добавление
+                db.insert('courses', courseData);
+            }
+
+            closeCourseModal();
+            loadCourses();
+        }
+
+        function deleteCourse(courseId) {
+            if (confirm('Вы уверены, что хотите удалить этот курс?')) {
+                db.delete('courses', courseId);
+                loadCourses();
+            }
+        }
+
+        // Функции для заявок
+        function loadApplications() {
+            const applications = db.select('applications');
+            const tbody = document.getElementById('applicationsTableBody');
+            
+            if (applications.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">Нет заявок</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = applications.map(app => {
+                const user = db.select('users', { id: app.userId })[0];
+                const course = db.select('courses', { id: app.courseId })[0];
+                
+                return `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${user ? user.fullName : app.userName}</div>
+                            <div class="text-sm text-gray-500">${user ? user.email : ''}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${course ? course.name : app.courseName}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${new Date(app.startDate).toLocaleDateString('ru-RU')}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${app.paymentMethod === 'cash' ? 'Наличные' : 'Переводом'}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                ${app.status === 'active' ? 'Активный' : 'Завершен'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ${new Date(app.createdAt).toLocaleDateString('ru-RU')}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    </script>
+    <script>feather.replace();</script>
+</body>
+</html>

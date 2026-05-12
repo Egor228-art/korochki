@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+    <title>Записаться на курс - Корочки.Есть</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="courses-data.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    /* Временные стили для компонентов */
+    custom-navbar:not(:defined), custom-footer:not(:defined) {
+        display: block;
+        background: white;
+    }
+    
+    custom-navbar:not(:defined) {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        min-height: 80px;
+    }
+    
+    custom-footer:not(:defined) {
+        background: #1f2937 !important;
+        min-height: 100px;
+    }
+</style>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold mb-4">Выберите курс</h1>
+                <p class="text-gray-600 text-lg">Подайте заявку на обучение и получите документы об окончании</p>
+            </div>
+            
+            <!-- Статичные курсы -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Курс 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center p-4">
+                        <div class="text-6xl text-blue-400">💻</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 flex-1">Веб-разработка</h3>
+                            <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">
+                                Программирование
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Освойте современные веб-технологии: HTML, CSS, JavaScript и фреймворки. Научитесь создавать адаптивные сайты и веб-приложения.</p>
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">15,000 ₽</span>
+                                <span class="text-gray-500 text-sm block mt-1">8 недель</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectCourse('Веб-разработка', 15000, '8 недель', 'Программирование')" 
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition duration-200">
+                            Подать заявку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Курс 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-500 flex items-center justify-center p-4">
+                        <div class="text-6xl text-indigo-400">📊</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 flex-1">Анализ данных</h3>
+                            <span class="ml-2 px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded">
+                                Аналитика
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Научитесь анализировать данные с помощью Python, SQL и библиотек для анализа. Визуализация данных и построение отчетов.</p>
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-indigo-600">18,000 ₽</span>
+                                <span class="text-gray-500 text-sm block mt-1">6 недель</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectCourse('Анализ данных', 18000, '6 недель', 'Аналитика')" 
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg font-medium transition duration-200">
+                            Подать заявку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Курс 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center p-4">
+                        <div class="text-6xl text-purple-400">🎯</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 flex-1">Цифровой маркетинг</h3>
+                            <span class="ml-2 px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">
+                                Маркетинг
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Освойте инструменты цифрового маркетинга: SEO, SMM, контекстная реклама. Научитесь привлекать клиентов и увеличивать продажи.</p>
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-purple-600">12,000 ₽</span>
+                                <span class="text-gray-500 text-sm block mt-1">4 недели</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectCourse('Цифровой маркетинг', 12000, '4 недели', 'Маркетинг')" 
+                                class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg font-medium transition duration-200">
+                            Подать заявку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Курс 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center p-4">
+                        <div class="text-6xl text-blue-400">📱</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 flex-1">Мобильная разработка</h3>
+                            <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">
+                                Программирование
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Создавайте мобильные приложения для iOS и Android. Изучите React Native, Flutter и нативные технологии разработки.</p>
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">20,000 ₽</span>
+                                <span class="text-gray-500 text-sm block mt-1">10 недель</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectCourse('Мобильная разработка', 20000, '10 недель', 'Программирование')" 
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition duration-200">
+                            Подать заявку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Курс 5 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-500 flex items-center justify-center p-4">
+                        <div class="text-6xl text-indigo-400">🎨</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 flex-1">Графический дизайн</h3>
+                            <span class="ml-2 px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded">
+                                Дизайн
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Освойте Adobe Photoshop, Illustrator и Figma. Научитесь создавать логотипы, брендинг и UI/UX дизайн для веб и мобильных приложений.</p>
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-indigo-600">14,000 ₽</span>
+                                <span class="text-gray-500 text-sm block mt-1">7 недель</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectCourse('Графический дизайн', 14000, '7 недель', 'Дизайн')" 
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg font-medium transition duration-200">
+                            Подать заявку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Курс 6 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center p-4">
+                        <div class="text-6xl text-purple-400">🤖</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 flex-1">Искусственный интеллект</h3>
+                            <span class="ml-2 px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">
+                                AI/ML
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Введение в машинное обучение и нейронные сети. Практическое применение AI в бизнесе и создание простых моделей.</p>
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-purple-600">25,000 ₽</span>
+                                <span class="text-gray-500 text-sm block mt-1">12 недель</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectCourse('Искусственный интеллект', 25000, '12 недель', 'AI/ML')" 
+                                class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg font-medium transition duration-200">
+                            Подать заявку
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Заменяем статичные курсы на динамические -->
+        <div id="coursesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <!-- Курсы будут генерироваться через JS -->
+        </div>
+
+        <!-- Добавьте этот код в new-application.html после формы заявки и перед закрывающим main -->
+        <!-- Модальное окно курса -->
+        <div id="courseModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[95vh] overflow-y-auto">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex-1">
+                            <h2 class="text-3xl font-bold text-gray-900" id="modalCourseTitle">Название курса</h2>
+                            <div class="flex items-center mt-2 space-x-4">
+                                <span id="modalCourseCategory" class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full"></span>
+                                <span id="modalCourseLevel" class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full"></span>
+                                <span id="modalCourseDuration" class="text-gray-500 text-sm"></span>
+                            </div>
+                        </div>
+                        <button onclick="closeCourseModal()" class="text-gray-400 hover:text-gray-600 ml-4">
+                            <i data-feather="x" class="w-8 h-8"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Основная информация -->
+                        <div class="lg:col-span-2">
+                            <div class="flex items-center mb-6">
+                                <span id="modalCourseEmoji" class="text-6xl mr-6"></span>
+                                <div class="flex-1">
+                                    <p id="modalCourseDescription" class="text-gray-700 text-lg leading-relaxed"></p>
+                                </div>
+                            </div>
+
+                            <!-- Детали курса -->
+                            <div class="grid grid-cols-2 gap-4 mb-8" style="margin-bottom: 3.5rem;">
+                                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-600" id="modalCoursePrice">0 ₽</div>
+                                    <div class="text-sm text-gray-600 mt-1">Стоимость обучения</div>
+                                </div>
+                                <div class="text-center p-4 bg-green-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-600" id="modalCourseWeeks">0</div>
+                                    <div class="text-sm text-gray-600 mt-1">Недель обучения</div>
+                                </div>
+                                <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-purple-600" id="modalCourseLessons">0</div>
+                                    <div class="text-sm text-gray-600 mt-1">Уроков</div>
+                                </div>
+                                <div class="text-center p-4 bg-orange-50 rounded-lg">
+                                    <div class="text-2xl font-bold text-orange-600" id="modalCourseProjects">0</div>
+                                    <div class="text-sm text-gray-600 mt-1">Практических проектов</div>
+                                </div>
+                            </div>
+
+                            <!-- Чему вы научитесь -->
+                            <div class="mb-8" style="margin-bottom: 3.5rem;">
+                                <h3 class="text-xl font-semibold mb-4 text-gray-900">🎯 Чему вы научитесь</h3>
+                                <ul id="modalCourseSkills" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <!-- Навыки будут добавляться через JS -->
+                                </ul>
+                            </div>
+
+                            <!-- Программа курса -->
+                            <div class="mb-8" style="margin-bottom: 3.5rem;">
+                                <h3 class="text-xl font-semibold mb-4 text-gray-900">📚 Программа курса</h3>
+                                <div id="modalCourseCurriculum" class="space-y-3">
+                                    <!-- Модули будут добавляться через JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Боковая панель -->
+                        <div class="space-y-6">
+                            <!-- Преподаватель -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold mb-3 text-gray-900">👨‍🏫 Преподаватель</h4>
+                                <div id="modalCourseInstructor" class="text-sm text-gray-700">
+                                    <!-- Информация о преподавателе -->
+                                </div>
+                            </div>
+
+                            <!-- Формат обучения -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold mb-3 text-gray-900">📖 Формат обучения</h4>
+                                <ul id="modalCourseFormat" class="text-sm text-gray-700 space-y-2">
+                                    <!-- Форматы обучения -->
+                                </ul>
+                            </div>
+
+                            <!-- Для кого курс -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold mb-3 text-gray-900">🎯 Для кого этот курс</h4>
+                                <ul id="modalCourseAudience" class="text-sm text-gray-700 space-y-2">
+                                    <!-- Целевая аудитория -->
+                                </ul>
+                            </div>
+
+                            <!-- Кнопка подачи заявки -->
+                            <button id="modalApplyBtn" 
+                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-lg font-semibold text-lg transition duration-200 shadow-lg">
+                                Подать заявку на курс
+                            </button>
+
+                            <!-- Дополнительная информация -->
+                            <div class="text-center text-sm text-gray-500">
+                                <p>✅ Сертификат по окончании</p>
+                                <p>🔄 Доступ к материалам на 1 год</p>
+                                <p>💼 Помощь в трудоустройстве</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма заявки -->
+        <div id="applicationFormContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold">Подача заявки</h2>
+                        <button onclick="cancelSelection()" class="text-gray-400 hover:text-gray-600">
+                            <i data-feather="x" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    
+                    <form id="applicationForm" class="space-y-4">
+                        <input type="hidden" id="selectedCourseName">
+                        <input type="hidden" id="selectedCoursePrice">
+                        <input type="hidden" id="selectedCourseDuration">
+                        <input type="hidden" id="selectedCourseCategory">
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg" id="displayCourseName">Название курса</h3>
+                            <p class="text-gray-600 text-sm mt-1" id="displayCourseCategory">Категория</p>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="text-blue-600 font-bold text-lg" id="displayCoursePrice">Цена</span>
+                                <span class="text-gray-500 text-sm" id="displayCourseDuration">Длительность</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="startDate" class="block text-sm font-medium text-gray-700 mb-2">Желаемая дата начала *</label>
+                            <input type="date" id="startDate" name="startDate" required
+                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Способ оплаты *</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <input id="cash" name="paymentMethod" type="radio" value="cash" checked
+                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-3 text-gray-700">💵 Наличные</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <input id="transfer" name="paymentMethod" type="radio" value="transfer"
+                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-3 text-gray-700">🏦 Банковский перевод</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i data-feather="info" class="w-5 h-5 text-yellow-600 mt-0.5 mr-2"></i>
+                                <div>
+                                    <p class="text-yellow-800 text-sm font-medium">После подачи заявки</p>
+                                    <p class="text-yellow-700 text-xs mt-1">Администратор свяжется с вами для подтверждения и уточнения деталей. Статус заявки можно отслеживать в личном кабинете.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-3 pt-4">
+                            <button type="button" onclick="cancelSelection()" 
+                                    class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium">
+                                Отмена
+                            </button>
+                            <button type="submit" 
+                                    class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                                Подать заявку
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+<script src="pocketbase.js"></script>
+<script>
+    // Расширенные данные о курсах
+    const courseDetails = {
+        "Веб-разработка": {
+            level: "Начальный - Средний",
+            lessons: 48,
+            projects: 5,
+            skills: [
+                "HTML5 и семантическая верстка",
+                "CSS3, Flexbox, Grid и анимации",
+                "JavaScript ES6+ и современный синтаксис",
+                "React.js и компонентный подход",
+                "Node.js и основы бэкенда",
+                "Работа с Git и GitHub",
+                "Адаптивная и кроссбраузерная верстка",
+                "Оптимизация производительности"
+            ],
+            curriculum: [
+                "Модуль 1: Основы HTML и CSS (2 недели)",
+                "Модуль 2: JavaScript и DOM (3 недели)", 
+                "Модуль 3: React.js и современные фреймворки (2 недели)",
+                "Модуль 4: Бэкенд и базы данных (1 неделя)"
+            ],
+            instructor: "Алексей Петров - Senior Frontend Developer с 8-летним опытом. Работал в Яндекс и Tinkoff.",
+            format: [
+                "📹 20+ часов видеоуроков",
+                "🛠 50+ практических заданий",
+                "💬 Закрытый чат с куратором",
+                "📞 4 живых вебинара с обратной связью"
+            ],
+            audience: [
+                "Новичкам в программировании",
+                "Дизайнерам, желающим освоить верстку",
+                "Начинающим фронтенд-разработчикам"
+            ]
+        },
+        "Анализ данных": {
+            level: "Средний",
+            lessons: 36,
+            projects: 4,
+            skills: [
+                "Python для анализа данных (Pandas, NumPy)",
+                "SQL и работа с базами данных",
+                "Визуализация данных (Matplotlib, Seaborn)",
+                "Статистический анализ и A/B тестирование",
+                "Машинное обучение на базовом уровне",
+                "Построение дашбордов в Tableau",
+                "Очистка и подготовка данных",
+                "Автоматизация отчетности"
+            ],
+            curriculum: [
+                "Модуль 1: Python для анализа данных (2 недели)",
+                "Модуль 2: SQL и базы данных (1 неделя)",
+                "Модуль 3: Визуализация и статистика (2 недели)", 
+                "Модуль 4: Проект и дашборды (1 неделя)"
+            ],
+            instructor: "Мария Сидорова - Data Analyst в Сбере. 6 лет в аналитике данных.",
+            format: [
+                "📹 15+ часов видеоуроков",
+                "📊 Работа с реальными датасетами",
+                "💬 Разбор домашних заданий",
+                "📈 Проект для портфолио"
+            ],
+            audience: [
+                "Маркетологам и продуктологам",
+                "Начинающим аналитикам",
+                "Студентам технических специальностей"
+            ]
+        },
+        "Цифровой маркетинг": {
+            level: "Начальный",
+            lessons: 24,
+            projects: 3,
+            skills: [
+                "SEO-оптимизация и продвижение сайтов",
+                "SMM и ведение социальных сетей",
+                "Настройка контекстной рекламы (Яндекс.Директ, Google Ads)",
+                "Email-маркетинг и автоматизация",
+                "Аналитика (Google Analytics, Яндекс.Метрика)",
+                "Стратегия контент-маркетинга",
+                "Таргетированная реклама",
+                "Копирайтинг для маркетинга"
+            ],
+            curriculum: [
+                "Модуль 1: Основы цифрового маркетинга (1 неделя)",
+                "Модуль 2: SEO и контент (1 неделя)",
+                "Модуль 3: Реклама и SMM (1 неделя)",
+                "Модуль 4: Аналитика и метрики (1 неделя)"
+            ],
+            instructor: "Дмитрий Козлов - Digital Marketing Team Lead. Опыт 7+ лет.",
+            format: [
+                "📹 12+ часов видеоуроков",
+                "📱 Практика на реальных кейсах",
+                "💼 Разбор инструментов маркетинга",
+                "📊 Сертификационный проект"
+            ],
+            audience: [
+                "Начинающим маркетологам",
+                "Владельцам малого бизнеса",
+                "Специалистам смежных профессий"
+            ]
+        },
+        "Мобильная разработка": {
+            level: "Средний - Продвинутый",
+            lessons: 60,
+            projects: 6,
+            skills: [
+                "React Native или Flutter на выбор",
+                "Нативная разработка (Swift/Kotlin)",
+                "Работа с API и сетевыми запросами",
+                "Базы данных для мобильных приложений",
+                "UI/UX для мобильных платформ",
+                "Публикация в App Store и Google Play",
+                "Оптимизация производительности",
+                "Работа с сенсорами и камерой"
+            ],
+            curriculum: [
+                "Модуль 1: Основы мобильной разработки (2 недели)",
+                "Модуль 2: Выбранный фреймворк (4 недели)",
+                "Модуль 3: Продвинутые темы (2 недели)",
+                "Модуль 4: Публикация и монетизация (2 недели)"
+            ],
+            instructor: "Иван Новиков - Mobile Tech Lead. Разработал 20+ приложений.",
+            format: [
+                "📹 30+ часов видеоуроков",
+                "📱 6 реальных проектов",
+                "👨‍💻 Code review от ментора",
+                "🚀 Поддержка при публикации"
+            ],
+            audience: [
+                "Веб-разработчикам",
+                "Начинающим мобильным разработчикам",
+                "Студентам IT-специальностей"
+            ]
+        },
+        "Графический дизайн": {
+            level: "Начальный",
+            lessons: 28,
+            projects: 4,
+            skills: [
+                "Adobe Photoshop для растровой графики",
+                "Adobe Illustrator для векторной графики",
+                "Figma для UI/UX дизайна",
+                "Создание логотипов и брендинга",
+                "Основы типографики и композиции",
+                "Цветокоррекция и ретушь",
+                "Подготовка макетов к печати",
+                "Создание презентаций"
+            ],
+            curriculum: [
+                "Модуль 1: Основы дизайна (1 неделя)",
+                "Модуль 2: Adobe Photoshop (2 недели)",
+                "Модуль 3: Adobe Illustrator (2 недели)",
+                "Модуль 4: Figma и UI/UX (2 недели)"
+            ],
+            instructor: "Анна Лебедева - Арт-директор с 10-летним опытом.",
+            format: [
+                "🎨 Практика в профессиональных программах",
+                "📐 Разбор принципов дизайна",
+                "💼 Создание портфолио",
+                "👁 Работа с реальными брифами"
+            ],
+            audience: [
+                "Новичкам в дизайне",
+                "Маркетологам и SMM-специалистам",
+                "Владельцам бизнеса"
+            ]
+        },
+        "Искусственный интеллект": {
+            level: "Продвинутый",
+            lessons: 72,
+            projects: 8,
+            skills: [
+                "Основы машинного обучения",
+                "Работа с нейронными сетями",
+                "Библиотеки TensorFlow и PyTorch",
+                "Обработка естественного языка (NLP)",
+                "Компьютерное зрение",
+                "Рекомендательные системы",
+                "Генеративные модели",
+                "Деплой ML-моделей"
+            ],
+            curriculum: [
+                "Модуль 1: Основы Python и математики (2 недели)",
+                "Модуль 2: Машинное обучение (4 недели)",
+                "Модуль 3: Нейронные сети (3 недели)",
+                "Модуль 4: Специализация (3 недели)"
+            ],
+            instructor: "Профессор Сергей Волков - Кандидат технических наук.",
+            format: [
+                "🤖 Углубленное изучение AI/ML",
+                "📊 Работа с реальными датасетами",
+                "🔬 Исследовательские проекты",
+                "🎓 Академический подход"
+            ],
+            audience: [
+                "Разработчикам с опытом",
+                "Аналитикам данных",
+                "Студентам магистратуры"
+            ]
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        await pb.init();
+        setupEventListeners();
+        setupCourseCards();
+        
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('startDate').min = today;
+        
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    });
+
+    function setupEventListeners() {
+        document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await submitApplication();
+        });
+
+        document.getElementById('modalApplyBtn').addEventListener('click', function() {
+            const courseName = document.getElementById('modalCourseTitle').textContent;
+            const course = window.coursesData.find(c => c.title === courseName);
+            if (course) {
+                closeCourseModal();
+                selectCourse(course.title, course.price, course.duration, course.category);
+            }
+        });
+    }
+
+    function setupCourseCards() {
+        const courseCards = document.querySelectorAll('.bg-white.rounded-xl.shadow-lg');
+        courseCards.forEach(card => {
+            const button = card.querySelector('button');
+            
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                if (button && button.contains(e.target)) {
+                    return;
+                }
+                
+                const courseTitle = card.querySelector('h3').textContent;
+                const course = window.coursesData.find(c => c.title === courseTitle);
+                if (course) {
+                    openCourseModal(course);
+                }
+            });
+        });
+    }
+
+    function openCourseModal(course) {
+        const details = courseDetails[course.title] || {};
+        
+        // Основная информация
+        document.getElementById('modalCourseTitle').textContent = course.title;
+        document.getElementById('modalCourseEmoji').textContent = course.emoji;
+        document.getElementById('modalCourseCategory').textContent = course.category;
+        document.getElementById('modalCourseLevel').textContent = details.level || "Начальный";
+        document.getElementById('modalCourseDuration').textContent = course.duration;
+        document.getElementById('modalCourseDescription').textContent = course.description;
+        document.getElementById('modalCoursePrice').textContent = course.price.toLocaleString() + ' ₽';
+        
+        // Извлекаем количество недель
+        const weeksMatch = course.duration.match(/\d+/);
+        document.getElementById('modalCourseWeeks').textContent = weeksMatch ? weeksMatch[0] : '0';
+        document.getElementById('modalCourseLessons').textContent = details.lessons || '0';
+        document.getElementById('modalCourseProjects').textContent = details.projects || '0';
+        
+        // Навыки
+        const skillsList = document.getElementById('modalCourseSkills');
+        skillsList.innerHTML = '';
+        const skills = details.skills || ['Информация о навыках скоро будет добавлена'];
+        skills.forEach(skill => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start';
+            li.innerHTML = `
+                <span class="text-green-500 mr-2 mt-1">✓</span>
+                <span class="text-gray-700">${skill}</span>
+            `;
+            skillsList.appendChild(li);
+        });
+        
+        // Программа
+        const curriculumList = document.getElementById('modalCourseCurriculum');
+        curriculumList.innerHTML = '';
+        const curriculum = details.curriculum || ['Программа курса находится в разработке'];
+        curriculum.forEach(module => {
+            const div = document.createElement('div');
+            div.className = 'flex items-center p-3 bg-gray-50 rounded-lg';
+            div.innerHTML = `
+                <span class="text-blue-500 mr-3">📖</span>
+                <span class="text-gray-700">${module}</span>
+            `;
+            curriculumList.appendChild(div);
+        });
+        
+        // Преподаватель
+        document.getElementById('modalCourseInstructor').textContent = details.instructor || 'Информация о преподавателе скоро будет добавлена';
+        
+        // Формат обучения
+        const formatList = document.getElementById('modalCourseFormat');
+        formatList.innerHTML = '';
+        const formats = details.format || ['Формат обучения уточняется'];
+        formats.forEach(format => {
+            const li = document.createElement('li');
+            li.className = 'flex items-center';
+            li.textContent = format;
+            formatList.appendChild(li);
+        });
+        
+        // Аудитория
+        const audienceList = document.getElementById('modalCourseAudience');
+        audienceList.innerHTML = '';
+        const audience = details.audience || ['Курс подходит для всех желающих'];
+        audience.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start';
+            li.innerHTML = `
+                <span class="text-blue-500 mr-2 mt-1">•</span>
+                <span class="text-gray-700">${item}</span>
+            `;
+            audienceList.appendChild(li);
+        });
+        
+        // Показываем модальное окно
+        document.getElementById('courseModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // Обновляем иконки
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    }
+
+    function closeCourseModal() {
+        document.getElementById('courseModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function selectCourse(name, price, duration, category) {
+        if (!pb.isLoggedIn()) {
+            if (confirm('Для подачи заявки необходимо войти в аккаунт. Перейти на страницу входа?')) {
+                window.location.href = 'login.html';
+            }
+            return;
+        }
+
+        document.getElementById('selectedCourseName').value = name;
+        document.getElementById('selectedCoursePrice').value = price;
+        document.getElementById('selectedCourseDuration').value = duration;
+        document.getElementById('selectedCourseCategory').value = category;
+        
+        document.getElementById('displayCourseName').textContent = name;
+        document.getElementById('displayCoursePrice').textContent = price + ' ₽';
+        document.getElementById('displayCourseDuration').textContent = duration;
+        document.getElementById('displayCourseCategory').textContent = category;
+        
+        document.getElementById('applicationFormContainer').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function cancelSelection() {
+        document.getElementById('applicationFormContainer').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        document.getElementById('applicationForm').reset();
+    }
+
+    async function submitApplication() {
+        try {
+            const currentUser = pb.getCurrentUser();
+            if (!currentUser) {
+                alert('Ошибка: необходимо войти в аккаунт');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const courseName = document.getElementById('selectedCourseName').value;
+            const coursePrice = document.getElementById('selectedCoursePrice').value;
+            const courseDuration = document.getElementById('selectedCourseDuration').value;
+            const courseCategory = document.getElementById('selectedCourseCategory').value;
+            const startDate = document.getElementById('startDate').value;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (!startDate) {
+                alert('Пожалуйста, выберите желаемую дату начала курса');
+                return;
+            }
+
+            const applicationData = {
+                user: currentUser.id,
+                course_name: courseName,
+                course_price: parseInt(coursePrice),
+                course_duration: courseDuration,
+                course_category: courseCategory,
+                start_date: startDate,
+                payment_method: paymentMethod,
+                status: 'Новая'
+            };
+
+            console.log('Отправка заявки:', applicationData);
+            
+            await pb.createApplication(applicationData);
+            alert('✅ Заявка успешно подана! Статус: "Новая". Администратор свяжется с вами в ближайшее время для подтверждения.');
+            window.location.href = 'applications.html';
+            
+        } catch (error) {
+            console.error('Ошибка подачи заявки:', error);
+            alert('Ошибка при подаче заявки: ' + error.message);
+        }
+    }
+</script>
+</body>
+</html>
